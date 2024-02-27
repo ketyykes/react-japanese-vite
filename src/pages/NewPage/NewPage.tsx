@@ -13,9 +13,25 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  DialogActions,
 } from '@mui/material/';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+
+type VocabularyState = {
+  kanji: string;
+  japanese: string;
+  chinese: string;
+  other: string;
+  id: string;
+};
+type VocabularyAction =
+  | { type: 'kanjiChange'; payload: string }
+  | { type: 'japaneseChange'; payload: string }
+  | { type: 'chineseChange'; payload: string }
+  | { type: 'otherChange'; payload: string }
+  | { type: 'addId' };
+
 const NewPage = () => {
   const [open, setOpen] = useState(false);
   const initialState = {
@@ -23,8 +39,9 @@ const NewPage = () => {
     japanese: '',
     chinese: '',
     other: '',
+    id: '0',
   };
-  function vocabularyReducer(state: any, action: any) {
+  function vocabularyReducer(state: VocabularyState, action: VocabularyAction) {
     switch (action.type) {
       case 'kanjiChange':
         return { ...state, kanji: action.payload };
@@ -34,6 +51,8 @@ const NewPage = () => {
         return { ...state, chinese: action.payload };
       case 'otherChange':
         return { ...state, other: action.payload };
+      case 'addId':
+        return { ...state, id: Date.now().toString() };
       default:
         return state;
     }
@@ -54,10 +73,21 @@ const NewPage = () => {
     },
   });
 
+  const handleDialogConfirm = () => {
+    DVocabularyInput({
+      type: 'addId',
+    });
+    console.log(vocabularyInput);
+  };
+
+  const handleDialogCancel = () => {};
+
+  console.log(vocabularyInput);
+
   return (
-    <>
-      <Container maxWidth="md">
-        <Card sx={{ minWidth: 375 }}>
+    <Container maxWidth="md">
+      <form>
+        <Card>
           <CardHeader title="日文練習" sx={{ textAlign: 'center' }}></CardHeader>
           <CardContent color="primary">
             <Typography variant="h4" align="center" sx={{ mb: 2 }}>
@@ -119,32 +149,38 @@ const NewPage = () => {
             </Grid>
           </CardContent>
           <CardActions sx={{ justifyContent: 'flex-end' }}>
-            <Button sx={{ width: '100px', m: 2 }} onClick={handleClickOpen} variant="contained">
+            <Button sx={{ width: '100px' }} onClick={handleClickOpen} variant="contained">
               儲存
             </Button>
           </CardActions>
         </Card>
-      </Container>
-      <StoreDialog fullWidth={true} maxWidth={'md'} onClose={handleClose} open={open}>
-        <DialogTitle>
-          測試
-          {open ? (
-            <IconButton
-              aria-label="close"
-              onClick={handleClose}
-              sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          ) : null}
-        </DialogTitle>
-        <DialogContent></DialogContent>
-      </StoreDialog>
-    </>
+        <StoreDialog fullWidth={true} maxWidth={'md'} onClose={handleClose} open={open}>
+          <DialogTitle>
+            確定儲存單字嗎
+            {open ? (
+              <IconButton
+                aria-label="close"
+                onClick={handleClose}
+                sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 8,
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+          </DialogTitle>
+          <DialogContent></DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogCancel}>取消</Button>
+            <Button onClick={handleDialogConfirm} autoFocus>
+              確定
+            </Button>
+          </DialogActions>
+        </StoreDialog>
+      </form>
+    </Container>
   );
 };
 export default NewPage;

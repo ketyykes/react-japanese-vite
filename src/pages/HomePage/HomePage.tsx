@@ -5,13 +5,13 @@ import Button from '@mui/material/Button';
 const HomePage = () => {
   return (
     <Container maxWidth="md">
-      <Card sx={{ minWidth: 375 }}>
+      <Card>
         <CardHeader title="日文練習" sx={{ textAlign: 'center' }}></CardHeader>
         <CardContent color="primary"></CardContent>
         <CardActions>
           <Grid container justifyContent="center" alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
-              <Button sx={{ width: '100%' }} component={RouterLink} to="/wordmanage" variant="contained" size="large">
+              <Button sx={{ width: '100%' }} component={RouterLink} to="/new" variant="contained" size="large">
                 新增
               </Button>
             </Grid>
