@@ -9,7 +9,7 @@ import {
   DialogActions,
 } from '@mui/material/';
 import CloseIcon from '@mui/icons-material/Close';
-import type { VocabularyState } from '../NewPage';
+import type { VocabularyState } from '@/types/index';
 
 import { styled } from '@mui/material/styles';
 
@@ -64,7 +64,7 @@ const StoreDialog: FC<StoreDialogProps> = ({
           </Typography>
         </Typography>
         <Typography variant="h5" component="p">
-          日文拼音：
+          日文：
           <Typography variant="h6" component="span">
             {vocabularyInput.japanese}
           </Typography>

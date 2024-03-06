@@ -1,0 +1,20 @@
+.circleButton :global(.MuiSvgIcon-root) {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+.margin0Auto {
+  margin: 0 auto;
+}
+.orange {
+  color: orange;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.yellow {
+  color: yellow;
+}

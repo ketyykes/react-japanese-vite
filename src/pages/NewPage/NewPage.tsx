@@ -11,14 +11,8 @@ import {
   TextField,
 } from '@mui/material/';
 import StoreDialog from './components/StoreDialog';
+import type { VocabularyState } from '@/types/index';
 
-export type VocabularyState = {
-  kanji: string;
-  japanese: string;
-  chinese: string;
-  other: string;
-  id: string;
-};
 type VocabularyAction =
   | { type: 'kanjiChange'; payload: string }
   | { type: 'japaneseChange'; payload: string }
@@ -31,6 +25,7 @@ const NewPage = () => {
     kanji: '',
     japanese: '',
     chinese: '',
+    color: 'red',
     other: '',
     id: '0',
   };
@@ -77,7 +72,7 @@ const NewPage = () => {
     setOpen(false);
   };
 
-  console.log('vocabularyInput', vocabularyInput);
+  // console.log('vocabularyInput', vocabularyInput);
 
   const [open, setOpen] = useState(false);
 
