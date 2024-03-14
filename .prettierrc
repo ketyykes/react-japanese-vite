@@ -5,5 +5,19 @@
   "singleQuote": true,
   "printWidth": 120,
   "bracketSpacing": true,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "importOrder": [
+    "^react(.*)",
+    "<THIRD_PARTY_MODULES>",
+    "^components/ui/(.*)$",
+    "^components/(.*)$",
+    "^assets/(.*)$",
+    "^[./]",
+    "^types(.*)"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports"
+  ]
 }

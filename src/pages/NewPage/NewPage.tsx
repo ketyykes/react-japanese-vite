@@ -1,10 +1,12 @@
-import { useState, useReducer, useEffect, useMemo } from 'react';
-import { Container } from '@mui/material/';
-import StoreDialog from './components/StoreDialog';
-import type { VocabularyState } from '@/types/index';
-import NewCard from './components/NewCard/NewCard';
+import { useEffect, useReducer, useState } from 'react';
+
 import vocabularyReducer from '@/pages/NewPage/components/NewCard/vocabularyReducer';
+import type { VocabularyState } from '@/types';
+import { Container } from '@mui/material/';
+
+import NewCard from './components/NewCard/NewCard';
 import { initialState } from './components/NewCard/vocabularyInitialState';
+import StoreDialog from './components/StoreDialog';
 
 const NewPage = () => {
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>(
@@ -13,10 +15,14 @@ const NewPage = () => {
   const [vocabularyInput, DVocabularyInput] = useReducer(vocabularyReducer, initialState);
   const [open, setOpen] = useState(false);
 
-  const filterVocabulary = useMemo(() => {}, [allVocabulary]);
-
   const handleDialogConfirm = () => {
-    setAllVocabulary((prev) => [...prev, { ...vocabularyInput, id: Date.now().toString() }]);
+    setAllVocabulary((prev) => [
+      ...prev,
+      {
+        ...vocabularyInput,
+        id: Date.now().toString(),
+      },
+    ]);
     DVocabularyInput({
       type: 'confirm',
     });
