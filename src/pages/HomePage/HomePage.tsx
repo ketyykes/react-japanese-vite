@@ -1,8 +1,13 @@
 import { Container, Grid, CardHeader, Card, CardActions, CardContent } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { JapaneseCharacter } from '@/assets/JapaneseCharacter';
 
 const HomePage = () => {
+  //把日文字元存入 localStorage
+  if (!localStorage.getItem('JapaneseCharacter')) {
+    localStorage.setItem('JapaneseCharacter', JSON.stringify(JapaneseCharacter));
+  }
   return (
     <Container maxWidth="md">
       <Card sx={{ minWidth: 375 }}>
