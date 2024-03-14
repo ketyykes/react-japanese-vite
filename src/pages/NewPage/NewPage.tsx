@@ -13,9 +13,11 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  Link,
 } from '@mui/material/';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+
 const NewPage = () => {
   const [open, setOpen] = useState(false);
   const initialState = {
@@ -122,6 +124,9 @@ const NewPage = () => {
             <Button sx={{ width: '100px', m: 2 }} onClick={handleClickOpen} variant="contained">
               儲存
             </Button>
+            <Link href="/" component={Button} underline="none">
+              返回
+            </Link>
           </CardActions>
         </Card>
       </Container>
