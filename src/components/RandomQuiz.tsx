@@ -32,6 +32,10 @@ const RandomQuiz: FC<RandomQuiz> = ({ quizType }) => {
     inputStringArray.forEach((inputString: string, index: number) => {
       if (inputString !== JapaneseCharacter[randomNumber].roma[index]) {
         setWordColor(wrongInput);
+        //輸入錯誤時，把這個單字資料存入 localStorage（不要重複存入）
+        if (localStorage.getItem('wrongInput') !== JSON.stringify(JapaneseCharacter[randomNumber])) {
+          localStorage.setItem('wrongInput', JSON.stringify(JapaneseCharacter[randomNumber]));
+        }
       }
     });
 

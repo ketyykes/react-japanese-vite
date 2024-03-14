@@ -8,6 +8,10 @@ const HomePage = () => {
   if (!localStorage.getItem('JapaneseCharacter')) {
     localStorage.setItem('JapaneseCharacter', JSON.stringify(JapaneseCharacter));
   }
+  // 創造一個 localStorage 來存放錯誤的單字
+  if (!localStorage.getItem('wrongInput')) {
+    localStorage.setItem('wrongInput', JSON.stringify([]));
+  }
   return (
     <Container maxWidth="md">
       <Card sx={{ minWidth: 375 }}>
