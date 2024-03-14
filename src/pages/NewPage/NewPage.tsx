@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect, useMemo } from 'react';
 import { Container } from '@mui/material/';
 import StoreDialog from './components/StoreDialog';
 import type { VocabularyState } from '@/types/index';
@@ -11,6 +11,9 @@ const NewPage = () => {
     localStorage.getItem('vocabulary') ? JSON.parse(localStorage.getItem('vocabulary') as string) : [],
   );
   const [vocabularyInput, DVocabularyInput] = useReducer(vocabularyReducer, initialState);
+  const [open, setOpen] = useState(false);
+
+  const filterVocabulary = useMemo(() => {}, [allVocabulary]);
 
   const handleDialogConfirm = () => {
     setAllVocabulary((prev) => [...prev, { ...vocabularyInput, id: Date.now().toString() }]);
@@ -19,13 +22,9 @@ const NewPage = () => {
     });
     setOpen(false);
   };
-
-  const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };

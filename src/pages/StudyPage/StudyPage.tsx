@@ -1,6 +1,6 @@
 import { Container, FormControl, Select, MenuItem, Stack, Box } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, useMemo } from 'react';
 import type { MouseEvent } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import type { VocabularyState } from '@/types/index';
@@ -9,8 +9,14 @@ import VocabularyCard from './components/VocabularyCard';
 
 const StudyPage = () => {
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>([]);
-
   const [colors, setColors] = useState<string[]>([]);
+
+  const filterVocabulary = useMemo(() => {
+    if (colors.length === 0) {
+      return allVocabulary;
+    }
+    return allVocabulary.filter((vocabulary) => colors.includes(vocabulary.color));
+  }, [allVocabulary, colors]);
 
   const handlerDeleteDialogConfirm = (vocabulary: VocabularyState) => {
     const newVocabulary = allVocabulary.filter((v) => v.id !== vocabulary.id);
@@ -62,7 +68,7 @@ const StudyPage = () => {
         </Stack>
       </Box>
       <Grid container spacing={3} disableEqualOverflow>
-        {allVocabulary.map((vocabularyInput, index) => {
+        {filterVocabulary.map((vocabularyInput, index) => {
           return (
             <Fragment key={index}>
               <Grid xs={12} md={4} lg={3}>
