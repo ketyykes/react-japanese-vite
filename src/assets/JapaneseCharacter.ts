@@ -1,10 +1,13 @@
-type JapaneseCharacter = {
-  hiragana: string;
-  katakana: string;
-  roma: string;
-};
+import { Word } from '@/types/word';
 
-export const JapaneseCharacter: JapaneseCharacter[] = [
+// type JapaneseCharacter = {
+//   hiragana: string;
+//   katakana: string;
+//   roma: string;
+//   other: string;
+// };
+
+export const JapaneseCharacter: Word[] = [
   {
     hiragana: 'あ',
     katakana: 'ア',
