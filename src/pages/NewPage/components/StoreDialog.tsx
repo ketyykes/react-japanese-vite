@@ -1,13 +1,5 @@
 import { FC } from 'react';
-import {
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  DialogActions,
-} from '@mui/material/';
+import { Typography, Button, Dialog, DialogTitle, DialogContent, IconButton, DialogActions } from '@mui/material/';
 import CloseIcon from '@mui/icons-material/Close';
 import type { VocabularyState } from '@/types/index';
 
@@ -30,14 +22,7 @@ type StoreDialogProps = {
   vocabularyInput: VocabularyState;
 };
 
-const StoreDialog: FC<StoreDialogProps> = ({
-  open,
-  onClose,
-  onCancel,
-  onConfirm,
-  vocabularyInput,
-}) => {
-  console.log(vocabularyInput);
+const StoreDialog: FC<StoreDialogProps> = ({ open, onClose, onCancel, onConfirm, vocabularyInput }) => {
   return (
     <StyledDialog fullWidth={true} maxWidth={'md'} open={open}>
       <DialogTitle>
