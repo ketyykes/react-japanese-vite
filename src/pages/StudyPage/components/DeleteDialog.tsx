@@ -16,22 +16,12 @@ const DeleteDialog: FC<DeleteDialogProps> = ({ open, onClose, onCancel, onConfir
     <Dialog open={open}>
       <DialogTitle>
         確定刪除單字嗎
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-          }}
-        >
+        <IconButton aria-label="close" onClick={onClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <Typography variant="h5" component="p">
-          刪除後無法復原
-        </Typography>
+        <Typography>刪除後無法復原</Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>取消</Button>

@@ -63,7 +63,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({ vocabularyInput, onConfirm })
               </Menu>
             </>
           }
-        ></CardHeader>
+        />
         <CardContent>
           <Typography variant="h5" component="p">
             中文：

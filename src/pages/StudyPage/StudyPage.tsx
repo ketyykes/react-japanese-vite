@@ -1,4 +1,5 @@
 import { Container, FormControl, Select, MenuItem, Stack, Box } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { useState, useEffect, Fragment } from 'react';
 import type { MouseEvent } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -9,9 +10,10 @@ import VocabularyCard from './components/VocabularyCard';
 const StudyPage = () => {
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>([]);
 
+  const [colors, setColors] = useState<string[]>([]);
+
   const handlerDeleteDialogConfirm = (vocabulary: VocabularyState) => {
     const newVocabulary = allVocabulary.filter((v) => v.id !== vocabulary.id);
-    console.log(newVocabulary);
     setAllVocabulary(newVocabulary);
     localStorage.setItem('vocabulary', JSON.stringify(newVocabulary));
   };
@@ -25,6 +27,12 @@ const StudyPage = () => {
     setAllVocabulary(newVocabulary);
     localStorage.setItem('vocabulary', JSON.stringify(newVocabulary));
   };
+  const handleColorChange = (event: SelectChangeEvent<typeof colors>) => {
+    const {
+      target: { value },
+    } = event;
+    setColors(typeof value === 'string' ? value.split(',') : value);
+  };
 
   useEffect(() => {
     const vocabulary = JSON.parse(localStorage.getItem('vocabulary') || '[]');
@@ -36,11 +44,19 @@ const StudyPage = () => {
       <Box sx={{ my: 10 }}>
         <Stack direction="row" spacing={2} justifyContent="center">
           <FormControl sx={{ width: 300 }}>
-            <Select>
-              <MenuItem key="red">red</MenuItem>
-              <MenuItem key="green">orange</MenuItem>
-              <MenuItem key="yellow">yellow</MenuItem>
-              <MenuItem key="green">green</MenuItem>
+            <Select onChange={handleColorChange} multiple value={colors}>
+              <MenuItem key="red" value="red">
+                red
+              </MenuItem>
+              <MenuItem key="orange" value="orange">
+                orange
+              </MenuItem>
+              <MenuItem key="yellow" value="yellow">
+                yellow
+              </MenuItem>
+              <MenuItem key="green" value="green">
+                green
+              </MenuItem>
             </Select>
           </FormControl>
         </Stack>
