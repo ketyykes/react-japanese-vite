@@ -11,7 +11,7 @@ const HomePage = () => {
         <CardActions>
           <Grid container justifyContent="center" alignItems="center" spacing={6}>
             <Grid item xs={12} sm={6}>
-              <Button sx={{ width: '100%' }} component={RouterLink} to="/wordmanage" variant="contained" size="large">
+              <Button sx={{ width: '100%' }} component={RouterLink} to="/new" variant="contained" size="large">
                 新增
               </Button>
             </Grid>

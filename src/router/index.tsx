@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '@/pages/HomePage/HomePage';
 import QuizPage from '@/pages/QuizPage/QuizPage';
 import StudyPage from '@/pages/StudyPage/StudyPage';
-import WordManagePage from '@/pages/NewPage/NewPage';
+import NewPage from '@/pages/NewPage/NewPage';
 import EditPage from '@/pages/EditPage/EditPage';
 
 const router = createBrowserRouter([
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/new',
-    element: <WordManagePage />,
+    element: <NewPage />,
   },
   {
     path: '/quiz',
