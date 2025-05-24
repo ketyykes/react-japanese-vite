@@ -1,13 +1,18 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import type { VocabularyState } from '@/types/index';
+import { ArrowBack } from '@mui/icons-material';
 import {
   Autocomplete,
   Box,
+  Button,
   Chip,
   Container,
+  IconButton,
   Stack,
   TextField,
+  Typography,
 } from '@mui/material';
 import { Grid } from '@mui/material';
 
@@ -15,6 +20,7 @@ import GroupColorButton from './components/GroupColorButton';
 import VocabularyCard from './components/VocabularyCard';
 
 const StudyPage = () => {
+  const navigate = useNavigate();
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>([]);
   const [colors, setColors] = useState<string[]>([]);
 
@@ -63,6 +69,10 @@ const StudyPage = () => {
     setColors(newValue.map((option) => option.value));
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // 回到上一頁
+  };
+
   useEffect(() => {
     const vocabulary: VocabularyState[] = JSON.parse(
       localStorage.getItem('vocabulary') || '[]',
@@ -74,6 +84,59 @@ const StudyPage = () => {
 
   return (
     <Container disableGutters maxWidth="xl">
+      <Box sx={{ mt: 3, mb: 4 }}>
+        <Grid container alignItems="center">
+          {/* 左側：返回按鈕 */}
+          <Grid size={4}>
+            <Button
+              onClick={handleGoBack}
+              startIcon={<ArrowBack />}
+              variant="text"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                  color: 'primary.main',
+                },
+              }}
+            >
+              返回
+            </Button>
+          </Grid>
+
+          {/* 中間：標題 */}
+          <Grid size={4}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{
+                fontWeight: 600,
+                color: 'text.primary',
+                textAlign: 'center',
+              }}
+            >
+              單字學習
+            </Typography>
+          </Grid>
+
+          {/* 右側：單字計數 */}
+          <Grid size={4}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: 'text.secondary',
+                textAlign: 'right',
+                paddingRight: '10px',
+              }}
+            >
+              共 {filterVocabulary.length} 個單字
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
       <Box sx={{ my: 10 }}>
         <Stack
           direction="row"

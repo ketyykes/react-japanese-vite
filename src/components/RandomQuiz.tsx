@@ -1,7 +1,9 @@
-import { useState, FC } from 'react';
-import { Input, Box, Typography } from '@mui/material';
-import style from './RandomQuiz.module.css';
+import { FC, useState } from 'react';
+
 import { JapaneseCharacter } from '@/assets/JapaneseCharacter';
+import { Box, Input, Typography } from '@mui/material';
+
+import style from './RandomQuiz.module.css';
 
 type RandomQuiz = {
   quizType: 'hiragana' | 'katakana';
@@ -9,7 +11,8 @@ type RandomQuiz = {
 const RandomQuiz: FC<RandomQuiz> = ({ quizType }) => {
   const { random_quiz, defaultInput, correctInput, wrongInput } = style;
 
-  const returnRandomIntNumber = (number: number) => Math.floor(Math.random() * number);
+  const returnRandomIntNumber = (number: number) =>
+    Math.floor(Math.random() * number);
 
   //產生隨機數字做為下一題，且不能等於先前的題目
   const makeNextQuiz = () => {
@@ -20,7 +23,9 @@ const RandomQuiz: FC<RandomQuiz> = ({ quizType }) => {
     return temRandomNumber;
   };
 
-  const [randomNumber, setRandomNumber] = useState(returnRandomIntNumber(JapaneseCharacter.length));
+  const [randomNumber, setRandomNumber] = useState(
+    returnRandomIntNumber(JapaneseCharacter.length),
+  );
   const [wordColor, setWordColor] = useState(defaultInput);
   const [readOnlyBoolean, setReadOnlyBoolean] = useState(false);
 
@@ -52,8 +57,15 @@ const RandomQuiz: FC<RandomQuiz> = ({ quizType }) => {
 
   return (
     <Box className={random_quiz}>
-      <Typography variant="h1">{JapaneseCharacter[randomNumber][quizType]}</Typography>
-      <Input className={wordColor} onChange={randomQuizHandler} type="text" readOnly={readOnlyBoolean}></Input>
+      <Typography variant="h1">
+        {JapaneseCharacter[randomNumber][quizType]}
+      </Typography>
+      <Input
+        className={wordColor}
+        onChange={randomQuizHandler}
+        type="text"
+        readOnly={readOnlyBoolean}
+      ></Input>
     </Box>
   );
 };
