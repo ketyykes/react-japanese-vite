@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import RandomQuiz from '@/components/RandomQuiz';
+import RandomQuiz from '@/pages/QuizPage/components/RandomQuiz';
 import { ArrowBack } from '@mui/icons-material';
 import {
   Box,
@@ -15,7 +15,6 @@ import {
   Typography,
 } from '@mui/material';
 
-// const { Option } = Select;
 const Quiz = () => {
   const navigate = useNavigate();
   const [quizType, setQuizType] = useState<'hiragana' | 'katakana'>('hiragana');
@@ -30,10 +29,8 @@ const Quiz = () => {
 
   return (
     <Container maxWidth="xl">
-      {/* 頁面頂部 - 返回按鈕和標題 */}
       <Box sx={{ mt: 3, mb: 4 }}>
         <Grid container alignItems="center">
-          {/* 左側：返回按鈕 */}
           <Grid size={4}>
             <Button
               onClick={handleGoBack}
@@ -95,7 +92,6 @@ const Quiz = () => {
         </FormControl>
       </Box>
 
-      {/* 隨機測驗組件 */}
       <RandomQuiz quizType={quizType} />
     </Container>
   );

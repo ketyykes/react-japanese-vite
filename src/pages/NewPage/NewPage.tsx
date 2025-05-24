@@ -2,11 +2,23 @@ import { useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import vocabularyReducer from '@/pages/NewPage/components/NewCard/vocabularyReducer';
+import {
+  chineseChangeChange,
+  japaneseChangeChange,
+  kanjiChangeChange,
+  otherChangeChange,
+} from '@/pages/NewPage/components/NewCard/vocabularyactionCreator';
 import type { VocabularyState } from '@/types';
 import { ArrowBack } from '@mui/icons-material';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 
-import NewCard from './components/NewCard/NewCard';
 import { initialState } from './components/NewCard/vocabularyInitialState';
 import StoreDialog from './components/StoreDialog';
 
@@ -103,11 +115,74 @@ const NewPage = () => {
         </Grid>
       </Box>
 
-      <NewCard
-        vocabularyData={vocabularyInput}
-        onSave={handleClickOpen}
-        DVocabularyInput={DVocabularyInput}
-      />
+      {/* 表單內容 */}
+      <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
+        <Grid container justifyContent="center" alignItems="center" spacing={3}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="漢字"
+              value={vocabularyInput.kanji || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(kanjiChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="拼音"
+              value={vocabularyInput.roma || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(japaneseChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="中文"
+              value={vocabularyInput.chinese || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(chineseChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              label="其他備註"
+              value={vocabularyInput.notation || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(otherChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+        </Grid>
+
+        {/* 儲存按鈕 */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleClickOpen}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+            }}
+          >
+            儲存
+          </Button>
+        </Box>
+      </Box>
+
       <StoreDialog
         vocabularyInput={vocabularyInput}
         open={open}
