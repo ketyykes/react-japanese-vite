@@ -34,7 +34,8 @@ const EditPage = () => {
     }
   }, [id]);
 
-  const handleSave = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (id) {
       const allVocabulary: VocabularyState[] = JSON.parse(
         localStorage.getItem('vocabulary') || '[]',
@@ -99,38 +100,42 @@ const EditPage = () => {
 
       {/* 表單內容 */}
       <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
-        <VocabularyForm
-          vocabularyData={vocabularyInput}
-          dispatch={DVocabularyInput}
-        />
+        <form onSubmit={handleSubmit}>
+          <VocabularyForm
+            vocabularyData={vocabularyInput}
+            dispatch={DVocabularyInput}
+          />
 
-        {/* 按鈕區域 */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
-          <Button
-            variant="outlined"
-            size="large"
-            onClick={handleCancel}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-            }}
+          {/* 按鈕區域 */}
+          <Box
+            sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}
           >
-            取消
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={handleSave}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-            }}
-          >
-            更新
-          </Button>
-        </Box>
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={handleCancel}
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              type="submit"
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+              }}
+            >
+              更新
+            </Button>
+          </Box>
+        </form>
       </Box>
     </Container>
   );

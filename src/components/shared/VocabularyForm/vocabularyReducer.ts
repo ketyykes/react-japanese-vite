@@ -1,6 +1,6 @@
+import type { VocabularyAction } from '@/components/shared/VocabularyForm/type';
 import type { VocabularyState } from '@/types/index';
 
-import type { VocabularyAction } from './type';
 import { initialState } from './vocabularyInitialState';
 
 function vocabularyReducer(state: VocabularyState, action: VocabularyAction) {

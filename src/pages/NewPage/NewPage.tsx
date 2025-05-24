@@ -41,7 +41,8 @@ const NewPage = () => {
     setOpen(false);
   };
 
-  const handleClickOpen = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setOpen(true);
   };
 
@@ -104,37 +105,41 @@ const NewPage = () => {
 
       {/* 表單內容 */}
       <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
-        <VocabularyForm
-          vocabularyData={vocabularyInput}
-          dispatch={DVocabularyInput}
-        />
+        <form onSubmit={handleSubmit}>
+          <VocabularyForm
+            vocabularyData={vocabularyInput}
+            dispatch={DVocabularyInput}
+          />
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
-          <Button
-            variant="outlined"
-            size="large"
-            onClick={handleCancel}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-            }}
+          <Box
+            sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}
           >
-            取消
-          </Button>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={handleClickOpen}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-            }}
-          >
-            儲存
-          </Button>
-        </Box>
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={handleCancel}
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+              }}
+            >
+              取消
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              type="submit"
+              sx={{
+                px: 4,
+                py: 1.5,
+                fontSize: '1.1rem',
+              }}
+            >
+              儲存
+            </Button>
+          </Box>
+        </form>
       </Box>
 
       <StoreDialog
