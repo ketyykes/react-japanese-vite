@@ -166,16 +166,15 @@ const StudyPage = () => {
                 {option.label}
               </Box>
             )}
-            renderTags={(value, getTagProps) =>
+            renderValue={(value, getItemProps) =>
               value.map((option, index) => (
                 <Chip
-                  {...getTagProps({ index })}
+                  {...getItemProps({ index })}
                   key={option.value}
                   label={option.label}
                   size="small"
                   sx={{
                     backgroundColor: option.color + '20',
-                    color: option.color,
                     '& .MuiChip-deleteIcon': {
                       color: option.color,
                     },

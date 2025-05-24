@@ -30,7 +30,8 @@ const DeleteDialog: FC<DeleteDialogProps> = ({
       onCancel={onCancel}
       onConfirm={handleConfirm}
       title="確定刪除單字嗎"
-      autoCloseOnConfirm={true}
+      maxWidth="sm"
+      fullWidth={true}
     >
       <Typography>刪除後無法復原</Typography>
     </ConfirmDialog>
