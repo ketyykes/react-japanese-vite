@@ -1,14 +1,14 @@
 import { useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { initialState } from '@/pages/NewPage/components/NewCard/vocabularyInitialState';
-import vocabularyReducer from '@/pages/NewPage/components/NewCard/vocabularyReducer';
 import {
-  chineseChangeChange,
-  japaneseChangeChange,
-  kanjiChangeChange,
-  otherChangeChange,
-} from '@/pages/NewPage/components/NewCard/vocabularyactionCreator';
+  createChineseAction,
+  createKanjiAction,
+  createNotationAction,
+  createRomaAction,
+} from '@/components/shared/VocabularyForm/vocabularyActionCreator';
+import { initialState } from '@/components/shared/VocabularyForm/vocabularyInitialState';
+import vocabularyReducer from '@/components/shared/VocabularyForm/vocabularyReducer';
 import type { VocabularyState } from '@/types';
 import { ArrowBack } from '@mui/icons-material';
 import {
@@ -119,7 +119,7 @@ const EditPage = () => {
               value={vocabularyInput.kanji || ''}
               fullWidth
               onChange={(e) => {
-                DVocabularyInput(kanjiChangeChange(e.target.value));
+                DVocabularyInput(createKanjiAction(e.target.value));
               }}
             />
           </Grid>
@@ -131,7 +131,7 @@ const EditPage = () => {
               value={vocabularyInput.roma || ''}
               fullWidth
               onChange={(e) => {
-                DVocabularyInput(japaneseChangeChange(e.target.value));
+                DVocabularyInput(createRomaAction(e.target.value));
               }}
             />
           </Grid>
@@ -143,7 +143,7 @@ const EditPage = () => {
               value={vocabularyInput.chinese || ''}
               fullWidth
               onChange={(e) => {
-                DVocabularyInput(chineseChangeChange(e.target.value));
+                DVocabularyInput(createChineseAction(e.target.value));
               }}
             />
           </Grid>
@@ -154,7 +154,7 @@ const EditPage = () => {
               value={vocabularyInput.notation || ''}
               fullWidth
               onChange={(e) => {
-                DVocabularyInput(otherChangeChange(e.target.value));
+                DVocabularyInput(createNotationAction(e.target.value));
               }}
             />
           </Grid>

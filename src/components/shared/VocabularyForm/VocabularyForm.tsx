@@ -1,13 +1,13 @@
 import React from 'react';
 import type { FC } from 'react';
 
-import type { VocabularyAction } from '@/pages/NewPage/components/NewCard/type';
 import {
-  chineseChangeChange,
-  japaneseChangeChange,
-  kanjiChangeChange,
-  otherChangeChange,
-} from '@/pages/NewPage/components/NewCard/vocabularyactionCreator';
+  createChineseAction,
+  createKanjiAction,
+  createNotationAction,
+  createRomaAction,
+} from '@/components/shared/VocabularyForm/vocabularyActionCreator';
+import type { VocabularyAction } from '@/pages/NewPage/components/NewCard/type';
 import type { VocabularyState } from '@/types';
 import { Grid, TextField } from '@mui/material';
 
@@ -29,7 +29,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
           value={vocabularyData.kanji || ''}
           sx={{ width: '100%' }}
           onChange={(e) => {
-            dispatch(kanjiChangeChange(e.target.value));
+            dispatch(createKanjiAction(e.target.value));
           }}
         />
       </Grid>
@@ -40,7 +40,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
           value={vocabularyData.roma || ''}
           sx={{ width: '100%' }}
           onChange={(e) => {
-            dispatch(japaneseChangeChange(e.target.value));
+            dispatch(createRomaAction(e.target.value));
           }}
         />
       </Grid>
@@ -51,7 +51,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
           value={vocabularyData.chinese || ''}
           sx={{ width: '100%' }}
           onChange={(e) => {
-            dispatch(chineseChangeChange(e.target.value));
+            dispatch(createChineseAction(e.target.value));
           }}
         />
       </Grid>
@@ -61,7 +61,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
           value={vocabularyData.notation || ''}
           sx={{ width: '100%' }}
           onChange={(e) => {
-            dispatch(otherChangeChange(e.target.value));
+            dispatch(createNotationAction(e.target.value));
           }}
         />
       </Grid>
