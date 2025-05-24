@@ -26,8 +26,8 @@ const StoreDialog: FC<StoreDialogProps> = ({
       onCancel={onCancel}
       onConfirm={onConfirm}
       title="確定儲存單字嗎"
+      maxWidth="sm"
       fullWidth={true}
-      maxWidth="md"
     >
       <Typography variant="h5" component="p">
         中文：

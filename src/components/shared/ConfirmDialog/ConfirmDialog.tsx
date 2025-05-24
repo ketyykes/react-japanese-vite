@@ -45,13 +45,10 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
   cancelText = '取消',
   maxWidth = 'sm',
   fullWidth = false,
-  autoCloseOnConfirm = false,
 }) => {
   const handleConfirm = () => {
     onConfirm();
-    if (autoCloseOnConfirm) {
-      onClose();
-    }
+    onClose();
   };
 
   return (
@@ -75,9 +72,7 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>{cancelText}</Button>
-        <Button onClick={handleConfirm} autoFocus>
-          {confirmText}
-        </Button>
+        <Button onClick={handleConfirm}>{confirmText}</Button>
       </DialogActions>
     </StyledDialog>
   );
