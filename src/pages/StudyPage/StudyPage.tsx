@@ -2,15 +2,14 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { VocabularyState } from '@/types/index';
 import {
+  Autocomplete,
   Box,
+  Chip,
   Container,
-  FormControl,
-  MenuItem,
-  Select,
   Stack,
+  TextField,
 } from '@mui/material';
 import { Grid } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material';
 
 import GroupColorButton from './components/GroupColorButton';
 import VocabularyCard from './components/VocabularyCard';
@@ -50,11 +49,18 @@ const StudyPage = () => {
     [],
   );
 
-  const handleColorChange = (event: SelectChangeEvent<typeof colors>) => {
-    const {
-      target: { value },
-    } = event;
-    setColors(typeof value === 'string' ? value.split(',') : value);
+  const colorOptions = [
+    { value: 'red', label: '紅色 (不熟悉)', color: '#f44336' },
+    { value: 'orange', label: '橙色 (一般)', color: '#ff9800' },
+    { value: 'yellow', label: '黃色 (還行)', color: '#ffeb3b' },
+    { value: 'green', label: '綠色 (熟悉)', color: '#4caf50' },
+  ];
+
+  const handleAutocompleteChange = (
+    _event: unknown,
+    newValue: typeof colorOptions,
+  ) => {
+    setColors(newValue.map((option) => option.value));
   };
 
   useEffect(() => {
@@ -69,23 +75,64 @@ const StudyPage = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Box sx={{ my: 10 }}>
-        <Stack direction="row" spacing={2} justifyContent="center">
-          <FormControl sx={{ width: 300 }}>
-            <Select onChange={handleColorChange} multiple value={colors}>
-              <MenuItem key="red" value="red">
-                red
-              </MenuItem>
-              <MenuItem key="orange" value="orange">
-                orange
-              </MenuItem>
-              <MenuItem key="yellow" value="yellow">
-                yellow
-              </MenuItem>
-              <MenuItem key="green" value="green">
-                green
-              </MenuItem>
-            </Select>
-          </FormControl>
+        <Stack
+          direction="row"
+          spacing={2}
+          justifyContent="center"
+          alignItems="flex-end"
+        >
+          <Autocomplete
+            multiple
+            options={colorOptions}
+            value={colorOptions.filter((option) =>
+              colors.includes(option.value),
+            )}
+            onChange={handleAutocompleteChange}
+            getOptionLabel={(option) => option.label}
+            noOptionsText="沒有匹配的選項"
+            renderOption={(props, option) => (
+              <Box component="li" {...props}>
+                <Box
+                  sx={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: '50%',
+                    backgroundColor: option.color,
+                    mr: 1,
+                  }}
+                />
+                {option.label}
+              </Box>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.value}
+                  label={option.label}
+                  size="small"
+                  sx={{
+                    backgroundColor: option.color + '20',
+                    color: option.color,
+                    '& .MuiChip-deleteIcon': {
+                      color: option.color,
+                    },
+                  }}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="過濾熟悉度顏色"
+                placeholder={
+                  colors.length === 0 ? '顯示全部單字' : '選擇更多顏色'
+                }
+                variant="outlined"
+              />
+            )}
+            sx={{ width: 400 }}
+          />
         </Stack>
       </Box>
       <Grid container spacing={3}>
