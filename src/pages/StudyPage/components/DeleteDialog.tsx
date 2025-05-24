@@ -1,16 +1,8 @@
 import { FC } from 'react';
 
+import ConfirmDialog from '@/components/shared/ConfirmDialog/ConfirmDialog';
 import type { VocabularyState } from '@/types';
-import CloseIcon from '@mui/icons-material/Close';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 
 type DeleteDialogProps = {
   open: boolean;
@@ -27,30 +19,21 @@ const DeleteDialog: FC<DeleteDialogProps> = ({
   onConfirm,
   vocabularyInput,
 }) => {
+  const handleConfirm = () => {
+    onConfirm(vocabularyInput);
+  };
+
   return (
-    <Dialog open={open}>
-      <DialogTitle>
-        確定刪除單字嗎
-        <IconButton aria-label="close" onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <Typography>刪除後無法復原</Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onCancel}>取消</Button>
-        <Button
-          onClick={() => {
-            onConfirm(vocabularyInput);
-            onClose();
-          }}
-          autoFocus
-        >
-          確定
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <ConfirmDialog
+      open={open}
+      onClose={onClose}
+      onCancel={onCancel}
+      onConfirm={handleConfirm}
+      title="確定刪除單字嗎"
+      autoCloseOnConfirm={true}
+    >
+      <Typography>刪除後無法復原</Typography>
+    </ConfirmDialog>
   );
 };
 

@@ -1,24 +1,12 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  createChineseAction,
-  createKanjiAction,
-  createNotationAction,
-  createRomaAction,
-} from '@/components/shared/VocabularyForm/vocabularyActionCreator';
+import VocabularyForm from '@/components/shared/VocabularyForm/VocabularyForm';
 import { initialState } from '@/components/shared/VocabularyForm/vocabularyInitialState';
 import vocabularyReducer from '@/components/shared/VocabularyForm/vocabularyReducer';
 import type { VocabularyState } from '@/types';
 import { ArrowBack } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 
 import StoreDialog from './components/StoreDialog';
 
@@ -74,10 +62,8 @@ const NewPage = () => {
 
   return (
     <Container maxWidth="xl">
-      {/* 頁面頂部 - 返回按鈕和標題 */}
       <Box sx={{ mt: 3, mb: 4 }}>
         <Grid container alignItems="center">
-          {/* 左側：返回按鈕 */}
           <Grid size={4}>
             <Button
               onClick={handleGoBack}
@@ -98,7 +84,6 @@ const NewPage = () => {
             </Button>
           </Grid>
 
-          {/* 中間：標題 */}
           <Grid size={4}>
             <Typography
               variant="h5"
@@ -113,63 +98,17 @@ const NewPage = () => {
             </Typography>
           </Grid>
 
-          {/* 右側：空白 */}
           <Grid size={4}></Grid>
         </Grid>
       </Box>
 
       {/* 表單內容 */}
       <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
-        <Grid container justifyContent="center" alignItems="center" spacing={3}>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField
-              required
-              label="漢字"
-              value={vocabularyInput.kanji || ''}
-              fullWidth
-              onChange={(e) => {
-                DVocabularyInput(createKanjiAction(e.target.value));
-              }}
-            />
-          </Grid>
+        <VocabularyForm
+          vocabularyData={vocabularyInput}
+          dispatch={DVocabularyInput}
+        />
 
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField
-              required
-              label="拼音"
-              value={vocabularyInput.roma || ''}
-              fullWidth
-              onChange={(e) => {
-                DVocabularyInput(createRomaAction(e.target.value));
-              }}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField
-              required
-              label="中文"
-              value={vocabularyInput.chinese || ''}
-              fullWidth
-              onChange={(e) => {
-                DVocabularyInput(createChineseAction(e.target.value));
-              }}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField
-              label="其他備註"
-              value={vocabularyInput.notation || ''}
-              fullWidth
-              onChange={(e) => {
-                DVocabularyInput(createNotationAction(e.target.value));
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        {/* 按鈕區域 */}
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
           <Button
             variant="outlined"
