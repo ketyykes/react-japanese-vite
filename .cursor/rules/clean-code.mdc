@@ -58,7 +58,7 @@ pages/
 
 ## UI 與 MUI 實踐
 - 優先使用 MUI v7 元件與 Theme System
-- 禁止使用 inline style，樣式變化統一透過 `sx` 或 Emotion `styled`
+- 禁止使用 inline style，樣式變化統一透過 `sx` 
 - 響應式設計應使用 `theme.breakpoints`，避免寫死 `px`
 - 使用 `Typography` 統一文字樣式，避免直接用 `<p>`、`<h1>` 等原生元素
 
