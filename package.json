@@ -13,11 +13,14 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
+    "@hookform/resolvers": "^5.0.1",
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.0"
+    "react-hook-form": "^7.56.4",
+    "react-router-dom": "^7.6.0",
+    "zod": "^3.25.28"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
