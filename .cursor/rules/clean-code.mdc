@@ -1,8 +1,7 @@
 ---
-title: clean-code-for-react
 description: |
-  本規則檔遵循《Clean Code 潔淨程式碼》原則，針對 React（含 MUI、TypeScript）專案撰寫元件與程式碼時的命名慣例、結構可讀性、解耦思維與邏輯清晰度進行最佳實踐指引。
 globs: ["*.tsx", "*.ts", "*.jsx", "*.js"]
+alwaysApply: true
 ---
 
 # Clean Code Guidelines for React + MUI
@@ -25,6 +24,8 @@ globs: ["*.tsx", "*.ts", "*.jsx", "*.js"]
   6. `export`
 
 ## 頁面模組化架構（Colocation）：
+
+
 ```
 pages/
 ├── PageName/
