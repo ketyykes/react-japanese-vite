@@ -1,8 +1,8 @@
 export type VocabularyState = {
-  color: string;
-  kanji: string;
-  japanese: string;
   chinese: string;
-  other: string;
+  familiar: 'red' | 'yellow' | 'green' | 'orange'; //熟悉程度
+  kanji: string;
+  roma: string;
+  notation: string; //備忘錄，memo,remark,notation
   id: string;
 };

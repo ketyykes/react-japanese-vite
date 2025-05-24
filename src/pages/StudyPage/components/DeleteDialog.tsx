@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { Typography, Button, Dialog, DialogTitle, DialogContent, IconButton, DialogActions } from '@mui/material/';
-import CloseIcon from '@mui/icons-material/Close';
+
 import type { VocabularyState } from '@/types';
+import CloseIcon from '@mui/icons-material/Close';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
 
 type DeleteDialogProps = {
   open: boolean;

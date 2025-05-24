@@ -1,13 +1,24 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Typography, Grid, TextField, Button, CardActions } from '@mui/material';
 import type { FC } from 'react';
+
 import {
-  otherChangeChange,
-  kanjiChangeChange,
-  japaneseChangeChange,
-  chineseChangeChange,
-} from './vocabularyactionCreator';
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
+
 import type { VocabularyAction } from './type';
+import {
+  chineseChangeChange,
+  japaneseChangeChange,
+  kanjiChangeChange,
+  otherChangeChange,
+} from './vocabularyactionCreator';
 
 type NewCardProps = {
   onSave: () => void;
@@ -23,7 +34,7 @@ const NewCard: FC<NewCardProps> = ({ onSave, DVocabularyInput }) => {
           新增單字
         </Typography>
         <Grid container justifyContent="center" alignItems="center" spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               required
               label="漢字"
@@ -33,7 +44,7 @@ const NewCard: FC<NewCardProps> = ({ onSave, DVocabularyInput }) => {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               required
               sx={{ width: '100%' }}
@@ -43,7 +54,7 @@ const NewCard: FC<NewCardProps> = ({ onSave, DVocabularyInput }) => {
               label="拼音"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               required
               sx={{ width: '100%' }}
@@ -53,7 +64,7 @@ const NewCard: FC<NewCardProps> = ({ onSave, DVocabularyInput }) => {
               label="中文"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               sx={{ width: '100%' }}
               onChange={(e) => {

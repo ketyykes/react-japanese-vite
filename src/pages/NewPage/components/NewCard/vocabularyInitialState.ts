@@ -1,8 +1,10 @@
-export const initialState = {
+import type { VocabularyState } from '@/types';
+
+export const initialState: VocabularyState = {
   kanji: '',
-  japanese: '',
   chinese: '',
-  color: 'red',
-  other: '',
+  roma: '',
+  familiar: 'red',
   id: '0',
+  notation: '',
 };

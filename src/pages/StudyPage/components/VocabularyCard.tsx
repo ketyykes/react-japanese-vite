@@ -1,19 +1,14 @@
 import type { FC, MouseEvent } from 'react';
 import { useState } from 'react';
-import { Card, CardHeader, CardContent, Typography, IconButton, Menu, MenuItem, Button } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import DeleteDialog from './DeleteDialog';
+
 import type { VocabularyState } from '@/types';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Card, CardContent, CardHeader, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+
+import DeleteDialog from './DeleteDialog';
 
 type VocabularyCardProps = {
-  vocabularyInput: {
-    id: string;
-    chinese: string;
-    japanese: string;
-    kanji: string;
-    other: string;
-    color: string;
-  };
+  vocabularyInput: VocabularyState;
   onConfirm: (vocabulary: VocabularyState) => void;
 };
 
@@ -41,7 +36,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({ vocabularyInput, onConfirm })
       <Card>
         <CardHeader
           sx={{
-            bgcolor: vocabularyInput.color,
+            bgcolor: vocabularyInput.familiar,
             py: 0.5,
           }}
           action={
@@ -49,15 +44,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({ vocabularyInput, onConfirm })
               <IconButton aria-label="settings" onClick={handleMenuOpen}>
                 <MoreVertIcon />
               </IconButton>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleMenuClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
+              <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
                 <MenuItem onClick={handleMenuClose}>編輯</MenuItem>
                 <MenuItem onClick={handleDeleteDialogOpen}>刪除</MenuItem>
               </Menu>
@@ -74,7 +61,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({ vocabularyInput, onConfirm })
           <Typography variant="h5" component="p">
             日文：
             <Typography variant="h6" component="span">
-              {vocabularyInput.japanese}
+              {vocabularyInput.kanji}
             </Typography>
           </Typography>
           <Typography variant="h5" component="p">
@@ -86,7 +73,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({ vocabularyInput, onConfirm })
           <Typography variant="h5" component="p">
             備註：
             <Typography variant="h6" component="span">
-              {vocabularyInput.other}
+              {vocabularyInput.notation}
             </Typography>
           </Typography>
         </CardContent>

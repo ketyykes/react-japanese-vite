@@ -1,4 +1,5 @@
 import type { VocabularyState } from '@/types/index';
+
 import type { VocabularyAction } from './type';
 import { initialState } from './vocabularyInitialState';
 
@@ -7,11 +8,11 @@ function vocabularyReducer(state: VocabularyState, action: VocabularyAction) {
     case 'kanjiChange':
       return { ...state, kanji: action.payload };
     case 'japaneseChange':
-      return { ...state, japanese: action.payload };
+      return { ...state, roma: action.payload };
     case 'chineseChange':
       return { ...state, chinese: action.payload };
     case 'otherChange':
-      return { ...state, other: action.payload };
+      return { ...state, notation: action.payload };
     case 'confirm': {
       return initialState;
     }

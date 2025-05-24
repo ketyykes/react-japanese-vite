@@ -1,9 +1,11 @@
-import { Container, FormControl, Select, MenuItem, Stack, Box } from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
-import { useState, useEffect, Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import type { MouseEvent } from 'react';
-import Grid from '@mui/material/Unstable_Grid2';
+
 import type { VocabularyState } from '@/types/index';
+import { Box, Container, FormControl, MenuItem, Select, Stack } from '@mui/material';
+import { Grid } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
+
 import GroupColorButton from './components/GroupColorButton';
 import VocabularyCard from './components/VocabularyCard';
 
@@ -15,7 +17,7 @@ const StudyPage = () => {
     if (colors.length === 0) {
       return allVocabulary;
     }
-    return allVocabulary.filter((vocabulary) => colors.includes(vocabulary.color));
+    return allVocabulary.filter((vocabulary) => colors.includes(vocabulary.familiar));
   }, [allVocabulary, colors]);
 
   const handlerDeleteDialogConfirm = (vocabulary: VocabularyState) => {
@@ -41,8 +43,10 @@ const StudyPage = () => {
   };
 
   useEffect(() => {
-    const vocabulary = JSON.parse(localStorage.getItem('vocabulary') || '[]');
+    const vocabulary: VocabularyState[] = JSON.parse(localStorage.getItem('vocabulary') || '[]');
     setAllVocabulary(vocabulary);
+
+    console.log(vocabulary);
   }, []);
 
   return (
@@ -67,11 +71,11 @@ const StudyPage = () => {
           </FormControl>
         </Stack>
       </Box>
-      <Grid container spacing={3} disableEqualOverflow>
+      <Grid container spacing={3}>
         {filterVocabulary.map((vocabularyInput, index) => {
           return (
             <Fragment key={index}>
-              <Grid xs={12} md={4} lg={3}>
+              <Grid size={{ xs: 12, md: 4, lg: 3 }}>
                 <VocabularyCard vocabularyInput={vocabularyInput} onConfirm={handlerDeleteDialogConfirm} />
                 <GroupColorButton onChangeColor={handleChangeColor(vocabularyInput)} />
               </Grid>

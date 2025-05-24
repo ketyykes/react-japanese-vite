@@ -1,8 +1,16 @@
 import { FC } from 'react';
-import { Typography, Button, Dialog, DialogTitle, DialogContent, IconButton, DialogActions } from '@mui/material/';
-import CloseIcon from '@mui/icons-material/Close';
-import type { VocabularyState } from '@/types/index';
 
+import type { VocabularyState } from '@/types/index';
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const StyledDialog = styled(Dialog)({
@@ -22,7 +30,13 @@ type StoreDialogProps = {
   vocabularyInput: VocabularyState;
 };
 
-const StoreDialog: FC<StoreDialogProps> = ({ open, onClose, onCancel, onConfirm, vocabularyInput }) => {
+const StoreDialog: FC<StoreDialogProps> = ({
+  open,
+  onClose,
+  onCancel,
+  onConfirm,
+  vocabularyInput,
+}) => {
   return (
     <StyledDialog fullWidth={true} maxWidth={'md'} open={open}>
       <DialogTitle>
@@ -49,9 +63,9 @@ const StoreDialog: FC<StoreDialogProps> = ({ open, onClose, onCancel, onConfirm,
           </Typography>
         </Typography>
         <Typography variant="h5" component="p">
-          日文：
+          拼音：
           <Typography variant="h6" component="span">
-            {vocabularyInput.japanese}
+            {vocabularyInput.roma}
           </Typography>
         </Typography>
         <Typography variant="h5" component="p">
@@ -63,16 +77,14 @@ const StoreDialog: FC<StoreDialogProps> = ({ open, onClose, onCancel, onConfirm,
         <Typography variant="h5" component="p">
           備註：
           <Typography variant="h6" component="span">
-            {vocabularyInput.other}
+            {vocabularyInput.notation}
           </Typography>
         </Typography>
       </DialogContent>
 
       <DialogActions>
         <Button onClick={onCancel}>取消</Button>
-        <Button onClick={onConfirm} autoFocus>
-          確定
-        </Button>
+        <Button onClick={onConfirm}>確定</Button>
       </DialogActions>
     </StyledDialog>
   );
