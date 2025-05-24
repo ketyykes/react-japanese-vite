@@ -65,6 +65,7 @@ pages/
 │   │   ├── index.ts
 │   │   └── data.ts
 │   ├── styles.tsx                # Emotion styled component（如有）
+|   |── types/ # 該頁面專用的型別
 
 ```
 
