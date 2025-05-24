@@ -45,4 +45,26 @@ alwaysApply: false
 ## 檔案命名
 - 組件使用 PascalCase
 - 一般檔案使用 kebab-case
-- 頁面組件放在對應的資料夾中
+- 頁面專屬的組件放在對應的資料夾中
+
+## 頁面模組
+
+每個頁面皆為一個獨立模組，其結構如下：
+
+```
+pages/
+├── PageName/
+│              # 主頁面元件
+│   ├── index.tsx                 # Router 用的 default export
+│   ├── components/               # 該頁面專用的元件
+│   │   ├── ComponentX.tsx
+│   │   ├── hooks/
+│   │   │   ├── usePageLogic.ts
+│   │   │   └── index.ts
+│   ├── constants/                # 該頁面專用常數與資料
+│   │   ├── index.ts
+│   │   └── data.ts
+│   ├── styles.tsx                # Emotion styled component（如有）
+
+```
+
