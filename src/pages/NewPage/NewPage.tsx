@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from 'react';
 
 import vocabularyReducer from '@/pages/NewPage/components/NewCard/vocabularyReducer';
 import type { VocabularyState } from '@/types';
-import { Container } from '@mui/material/';
+import { Container } from '@mui/material';
 
 import NewCard from './components/NewCard/NewCard';
 import { initialState } from './components/NewCard/vocabularyInitialState';
