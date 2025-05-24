@@ -61,6 +61,9 @@ const NewPage = () => {
     setOpen(false);
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
   const handleDialogCancel = () => {
     setOpen(false);
   };
@@ -166,8 +169,20 @@ const NewPage = () => {
           </Grid>
         </Grid>
 
-        {/* 儲存按鈕 */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        {/* 按鈕區域 */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={handleCancel}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+            }}
+          >
+            取消
+          </Button>
           <Button
             variant="contained"
             size="large"

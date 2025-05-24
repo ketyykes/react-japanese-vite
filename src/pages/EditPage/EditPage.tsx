@@ -1,17 +1,22 @@
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import VocabularyForm from '@/components/shared/VocabularyForm/VocabularyForm';
 import { initialState } from '@/pages/NewPage/components/NewCard/vocabularyInitialState';
 import vocabularyReducer from '@/pages/NewPage/components/NewCard/vocabularyReducer';
-import type { VocabularyState } from '@/types';
 import {
+  chineseChangeChange,
+  japaneseChangeChange,
+  kanjiChangeChange,
+  otherChangeChange,
+} from '@/pages/NewPage/components/NewCard/vocabularyactionCreator';
+import type { VocabularyState } from '@/types';
+import { ArrowBack } from '@mui/icons-material';
+import {
+  Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
   Container,
+  Grid,
+  TextField,
   Typography,
 } from '@mui/material';
 
@@ -22,6 +27,10 @@ const EditPage = () => {
     vocabularyReducer,
     initialState,
   );
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   // 載入編輯資料
   useEffect(() => {
@@ -55,27 +64,130 @@ const EditPage = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Card>
-        <CardHeader title="日文練習" sx={{ textAlign: 'center' }} />
-        <CardContent color="primary">
-          <Typography variant="h4" align="center" sx={{ mb: 2 }}>
-            編輯單字
-          </Typography>
-          <VocabularyForm
-            vocabularyData={vocabularyInput}
-            dispatch={DVocabularyInput}
-          />
-        </CardContent>
-        <CardActions sx={{ justifyContent: 'space-between' }}>
-          <Button onClick={handleCancel} variant="outlined">
+    <Container maxWidth="xl">
+      {/* 頁面頂部 - 返回按鈕和標題 */}
+      <Box sx={{ mt: 3, mb: 4 }}>
+        <Grid container alignItems="center">
+          {/* 左側：返回按鈕 */}
+          <Grid size={4}>
+            <Button
+              onClick={handleGoBack}
+              startIcon={<ArrowBack />}
+              variant="text"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                textTransform: 'none',
+                '&:hover': {
+                  backgroundColor: 'action.hover',
+                  color: 'primary.main',
+                },
+              }}
+            >
+              返回
+            </Button>
+          </Grid>
+
+          {/* 中間：標題 */}
+          <Grid size={4}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{
+                fontWeight: 600,
+                color: 'text.primary',
+                textAlign: 'center',
+              }}
+            >
+              編輯單字
+            </Typography>
+          </Grid>
+
+          {/* 右側：空白 */}
+          <Grid size={4}></Grid>
+        </Grid>
+      </Box>
+
+      {/* 表單內容 */}
+      <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
+        <Grid container justifyContent="center" alignItems="center" spacing={3}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="漢字"
+              value={vocabularyInput.kanji || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(kanjiChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="拼音"
+              value={vocabularyInput.roma || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(japaneseChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              required
+              label="中文"
+              value={vocabularyInput.chinese || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(chineseChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              label="其他備註"
+              value={vocabularyInput.notation || ''}
+              fullWidth
+              onChange={(e) => {
+                DVocabularyInput(otherChangeChange(e.target.value));
+              }}
+            />
+          </Grid>
+        </Grid>
+
+        {/* 按鈕區域 */}
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}>
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={handleCancel}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+            }}
+          >
             取消
           </Button>
-          <Button onClick={handleSave} variant="contained">
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleSave}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: '1.1rem',
+            }}
+          >
             更新
           </Button>
-        </CardActions>
-      </Card>
+        </Box>
+      </Box>
     </Container>
   );
 };
