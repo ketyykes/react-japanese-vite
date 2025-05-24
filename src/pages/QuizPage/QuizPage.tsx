@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
   Typography,
 } from '@mui/material';
 
@@ -30,7 +29,7 @@ const Quiz = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="xl">
       {/* 頁面頂部 - 返回按鈕和標題 */}
       <Box sx={{ mt: 3, mb: 4 }}>
         <Grid container alignItems="center">
@@ -58,7 +57,7 @@ const Quiz = () => {
           {/* 中間：標題 */}
           <Grid size={4}>
             <Typography
-              variant="h4"
+              variant="h5"
               component="h1"
               sx={{
                 fontWeight: 600,

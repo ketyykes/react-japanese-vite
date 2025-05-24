@@ -9,7 +9,6 @@ import {
   Button,
   Chip,
   Container,
-  IconButton,
   Stack,
   TextField,
   Typography,
@@ -83,7 +82,7 @@ const StudyPage = () => {
   }, []);
 
   return (
-    <Container disableGutters maxWidth="xl">
+    <Container maxWidth="xl">
       <Box sx={{ mt: 3, mb: 4 }}>
         <Grid container alignItems="center">
           {/* 左側：返回按鈕 */}
@@ -129,7 +128,7 @@ const StudyPage = () => {
               sx={{
                 color: 'text.secondary',
                 textAlign: 'right',
-                paddingRight: '10px',
+                pr: 2,
               }}
             >
               共 {filterVocabulary.length} 個單字
