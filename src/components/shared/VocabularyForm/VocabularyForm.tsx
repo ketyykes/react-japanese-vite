@@ -1,13 +1,13 @@
 import React from 'react';
 import type { FC } from 'react';
 
+import type { VocabularyAction } from '@/components/shared/VocabularyForm/type';
 import {
   createChineseAction,
   createKanjiAction,
   createNotationAction,
   createRomaAction,
 } from '@/components/shared/VocabularyForm/vocabularyActionCreator';
-import type { VocabularyAction } from '@/pages/NewPage/components/NewCard/type';
 import type { VocabularyState } from '@/types';
 import { Grid, TextField } from '@mui/material';
 
