@@ -2,7 +2,15 @@ import { FC } from 'react';
 
 import type { VocabularyState } from '@/types';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from '@mui/material';
 
 type DeleteDialogProps = {
   open: boolean;
@@ -12,15 +20,16 @@ type DeleteDialogProps = {
   vocabularyInput: VocabularyState;
 };
 
-const DeleteDialog: FC<DeleteDialogProps> = ({ open, onClose, onCancel, onConfirm, vocabularyInput }) => {
+const DeleteDialog: FC<DeleteDialogProps> = ({
+  open,
+  onClose,
+  onCancel,
+  onConfirm,
+  vocabularyInput,
+}) => {
   return (
     <Dialog open={open}>
-      <DialogTitle>
-        確定刪除單字嗎
-        <IconButton aria-label="close" onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
+      <DialogTitle>確定刪除單字嗎</DialogTitle>
       <DialogContent>
         <Typography>刪除後無法復原</Typography>
       </DialogContent>

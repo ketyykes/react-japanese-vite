@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
+
+import EditPage from '@/pages/EditPage/EditPage';
 import HomePage from '@/pages/HomePage/HomePage';
+import WordManagePage from '@/pages/NewPage/NewPage';
 import QuizPage from '@/pages/QuizPage/QuizPage';
 import StudyPage from '@/pages/StudyPage/StudyPage';
-import WordManagePage from '@/pages/NewPage/NewPage';
-import EditPage from '@/pages/EditPage/EditPage';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     element: <StudyPage />,
   },
   {
-    path: '/edit',
+    path: '/edit/:id',
     element: <EditPage />,
   },
   {

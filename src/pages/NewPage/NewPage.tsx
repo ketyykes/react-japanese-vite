@@ -10,9 +10,14 @@ import StoreDialog from './components/StoreDialog';
 
 const NewPage = () => {
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>(
-    localStorage.getItem('vocabulary') ? JSON.parse(localStorage.getItem('vocabulary') as string) : [],
+    localStorage.getItem('vocabulary')
+      ? JSON.parse(localStorage.getItem('vocabulary') as string)
+      : [],
   );
-  const [vocabularyInput, DVocabularyInput] = useReducer(vocabularyReducer, initialState);
+  const [vocabularyInput, DVocabularyInput] = useReducer(
+    vocabularyReducer,
+    initialState,
+  );
   const [open, setOpen] = useState(false);
 
   const handleDialogConfirm = () => {
@@ -45,7 +50,11 @@ const NewPage = () => {
 
   return (
     <Container maxWidth="md">
-      <NewCard onSave={handleClickOpen} DVocabularyInput={DVocabularyInput} />
+      <NewCard
+        vocabularyData={vocabularyInput}
+        onSave={handleClickOpen}
+        DVocabularyInput={DVocabularyInput}
+      />
       <StoreDialog
         vocabularyInput={vocabularyInput}
         open={open}

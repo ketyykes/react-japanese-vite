@@ -16,6 +16,9 @@ function vocabularyReducer(state: VocabularyState, action: VocabularyAction) {
     case 'confirm': {
       return initialState;
     }
+    case 'loadData': {
+      return { ...state, ...action.payload };
+    }
     default:
       return state;
   }
