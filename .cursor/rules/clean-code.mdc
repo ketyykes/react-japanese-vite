@@ -23,9 +23,9 @@ globs: ["*.tsx", "*.ts", "*.jsx", "*.js"]
   4. `hook`
   5. `UI render`
   6. `export`
-- 頁面模組化架構（Colocation）：
-```
 
+## 頁面模組化架構（Colocation）：
+```
 pages/
 ├── PageName/
 │   ├── PageName.tsx
@@ -38,8 +38,7 @@ pages/
 │   │   └── data.ts
 │   └── styles.tsx
 │   ├── types/
-
-````
+```
 
 ## TypeScript 與型別
 - 使用嚴格的 TypeScript 設定（建議參考 `@tsconfig/strictest`）
@@ -73,4 +72,3 @@ pages/
 ## 常數與測試
 - 將 magic number 轉為具名常數（如 `const MAX_RETRY = 3`）
 - 與元件強耦合的常數放在 `/constants/`
-
