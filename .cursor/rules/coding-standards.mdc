@@ -1,0 +1,48 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 編碼標準與最佳實踐
+
+## TypeScript 規範
+- 使用嚴格的 TypeScript 配置，參考 [tsconfig.json](mdc:tsconfig.json)
+- 所有組件都必須有明確的型別定義
+- 使用 [src/types/index.ts](mdc:src/types/index.ts) 中定義的共享型別
+- 優先使用 interface 而非 type，除非需要聯合型別
+
+## React 組件規範
+- 函數式組件使用 arrow function 語法
+- 使用 React 19 的最新特性和最佳實踐
+- 組件檔案結構：
+  ```
+  ComponentName/
+  ├── index.tsx
+  ├── ComponentName.tsx (可選，如果邏輯複雜)
+  └── styles.tsx (如果需要自定義樣式)
+  ```
+
+## 路徑別名
+- 使用 `@/` 別名引用 src 目錄下的檔案
+- 參考 [vite.config.ts](mdc:vite.config.ts) 中的配置
+
+## 狀態管理
+- 目前專案的核心狀態是 `VocabularyState` 型別，定義在 [src/types/index.ts](mdc:src/types/index.ts)
+
+## 樣式規範
+- 優先使用 Material-UI 組件和主題系統
+- 自定義樣式使用 Emotion 的 styled 組件
+- 保持一致的設計語言
+
+## Import 順序
+使用 Prettier 插件自動排序：
+1. React 相關套件
+2. 第三方套件
+3. 內部組件和工具 (使用 @ 別名)
+4. 相對路徑引入
+5. 型別引入放在最後
+
+## 檔案命名
+- 組件使用 PascalCase
+- 一般檔案使用 kebab-case
+- 頁面組件放在對應的資料夾中

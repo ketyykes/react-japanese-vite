@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Material UI v7 元件開發標準
+
+## 核心原則
+- **Mobile First Design**: 優先考慮手機使用體驗
+- **Material Design 3**: 遵循最新 Material Design 指南
+- **Emotion 樣式引擎**: 使用 MUI v7 預設的 Emotion
+- **TypeScript 嚴格模式**: 所有元件必須有完整型別定義
+
+## 元件結構規範
+```typescript
+interface ComponentProps {
+  // 明確的 prop 型別定義
+}
+
+const Component: React.FC<ComponentProps> = ({ ...props }) => {
+  const theme = useTheme();
+  
+  // 元件邏輯
+  
+  return (
+    // TSX 結構
+  );
+};
+```
+
+## 響應式設計
+- 使用 MUI 的 breakpoints 系統: `xs`, `sm`, `md`, `lg`, `xl`
+- 優先設計手機版本 (320px - 768px)
+- 使用 `sx` prop 進行響應式樣式設定
+
+## 樣式最佳實踐
+- 優先使用 `sx` prop 而非 styled components
+- 使用 theme 變數確保設計一致性
+- 適當運用 `alpha()`, `lighten()`, `darken()` 函數
+- 使用語義化的顏色名稱: `primary`, `secondary`, `success`, `warning`, `error`
+
+## 無障礙設計
+- 所有互動元素必須有適當的 ARIA 標籤
+- 確保色彩對比度符合 WCAG 2.1 標準
+- 支援鍵盤導航
+- 提供適當的焦點指示器
+
+## 動畫與過渡效果
+- 使用 MUI 的過渡組件: `Fade`, `Slide`, `Zoom`, `Collapse`
+- 動畫時間遵循 Material Design 標準 (200ms-300ms)
+- 使用 `cubic-bezier` 緩動函數提升體驗
+
+## 表單元件
+- 使用 `<TextField>`, `<Button>`, `<Select>` 等 MUI 元件
+- 配合 React Hook Form + Zod 進行表單驗證
+- 提供即時驗證回饋

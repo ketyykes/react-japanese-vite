@@ -1,0 +1,58 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+title: clean-code-for-react
+description: |
+  本規則檔遵循《Clean Code 潔淨程式碼》原則，針對 React（含 MUI、TypeScript）專案撰寫元件與程式碼時的命名慣例、結構可讀性、解耦思維與邏輯清晰度進行最佳實踐指引。
+globs: ["*.tsx", "*.ts", "*.jsx", "*.js"]
+---
+
+# Clean Code Guidelines for React + MUI
+
+## 命名規則
+
+- 命名需具備語意，能明確描述用途與內容
+- **避免縮寫**（除非是業界約定俗成的如 API, URL）
+- `handle` 開頭用於事件處理函式（如 `handleSubmit`）
+- `is`, `has`, `can` 開頭用於布林變數（如 `isLoading`、`hasError`）
+
+## 元件結構
+
+- 每個元件聚焦「單一職責」
+- 使用分層命名與子元件封裝（如 `ProfileForm`, `ProfileFormField`）
+- 建議結構順序：
+  1. `import`
+  2. `type/interface`
+  3. `constant`
+  4. `hook`
+  5. `UI render`
+  6. `export`
+
+## 函式撰寫原則
+
+- 每個函式只做一件事
+- 函式長度不超過 30 行（包含註解與空行）
+- 拆出邏輯重的部分為 helper function 或 custom hook
+
+## 可讀性與一致性
+
+- 避免巢狀超過 3 層的邏輯判斷
+- 使用 `early return` 來簡化判斷流程
+- 加入適度空行讓邏輯區塊清晰分明
+- TSX 中，props 超過 2 行請換行排列
+
+## UI & MUI 實踐
+
+- 優先使用 MUI 提供的元件，並統一樣式變化 via `sx` or styled API
+- RWD 使用 `theme.breakpoints` 控制，避免寫死 `px`
+- 使用 `Typography` 統一文字樣式，避免直接用 `<p>`、`<h1>` 等原生元素
+
+## 其他建議
+
+- 將 magic number 轉為具名常數
+- 註解只保留「解釋為何這樣做」的內容，不要解釋「做了什麼」
+- 建立 `hooks/`, `components/`, `utils/` 等目錄維持清晰結構
+
