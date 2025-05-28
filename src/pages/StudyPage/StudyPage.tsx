@@ -83,60 +83,48 @@ const StudyPage = () => {
 
   return (
     <Container maxWidth="xl">
+      {/* 頁面標題區域 - 簡潔的導航與標題 */}
       <Box sx={{ mt: 3, mb: 4 }}>
-        <Grid container alignItems="center">
-          {/* 左側：返回按鈕 */}
-          <Grid size={4}>
-            <Button
-              onClick={handleGoBack}
-              startIcon={<ArrowBack />}
-              variant="text"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                  color: 'primary.main',
-                },
-              }}
-            >
-              返回
-            </Button>
-          </Grid>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Button
+            onClick={handleGoBack}
+            startIcon={<ArrowBack />}
+            variant="text"
+            sx={{
+              color: 'text.secondary',
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              textTransform: 'none',
+              minWidth: 'auto',
+              '&:hover': {
+                backgroundColor: 'action.hover',
+                color: 'primary.main',
+              },
+            }}
+          >
+            返回
+          </Button>
 
-          {/* 中間：標題 */}
-          <Grid size={4}>
-            <Typography
-              variant="h5"
-              component="h1"
-              sx={{
-                fontWeight: 600,
-                color: 'text.primary',
-                textAlign: 'center',
-              }}
-            >
-              單字學習
-            </Typography>
-          </Grid>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{
+              fontWeight: 600,
+              color: 'text.primary',
+              flex: 1,
+              textAlign: 'center',
+            }}
+          >
+            單字學習
+          </Typography>
 
-          {/* 右側：單字計數 */}
-          <Grid size={4}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: 'text.secondary',
-                textAlign: 'right',
-                pr: 2,
-              }}
-            >
-              共 {filterVocabulary.length} 個單字
-            </Typography>
-          </Grid>
-        </Grid>
+          {/* 右側保持空白以平衡視覺 */}
+          <Box sx={{ width: 64 }} />
+        </Stack>
       </Box>
-      <Box sx={{ my: 10 }}>
+
+      {/* 過濾器區域 */}
+      <Box sx={{ mb: 4 }}>
         <Stack
           direction="row"
           spacing={2}
@@ -192,10 +180,66 @@ const StudyPage = () => {
                 variant="outlined"
               />
             )}
-            sx={{ width: 400 }}
+            sx={{
+              width: { xs: '100%', sm: 400 },
+              maxWidth: 400,
+            }}
           />
         </Stack>
       </Box>
+
+      {/* 結果統計區域 - 放在過濾器和內容之間 */}
+      <Box sx={{ mb: 3 }}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{
+            px: 1,
+            py: 2,
+            backgroundColor: 'grey.50',
+            borderRadius: 1,
+            border: '1px solid',
+            borderColor: 'grey.200',
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'text.primary',
+              fontWeight: 500,
+            }}
+          >
+            學習結果
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'primary.main',
+              fontWeight: 600,
+              fontSize: '1.1rem',
+            }}
+          >
+            共 {filterVocabulary.length} 個單字
+            {colors.length > 0 && (
+              <Typography
+                component="span"
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                  ml: 1,
+                  fontSize: '0.875rem',
+                }}
+              >
+                (已篩選)
+              </Typography>
+            )}
+          </Typography>
+        </Stack>
+      </Box>
+
+      {/* 單字卡片網格 */}
       <Grid container spacing={3}>
         {filterVocabulary.map((vocabularyInput) => {
           return (
