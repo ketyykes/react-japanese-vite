@@ -1,14 +1,12 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import PageLayout from '@/components/shared/PageLayout/PageLayout';
 import type { VocabularyState } from '@/types/index';
-import { ArrowBack } from '@mui/icons-material';
 import {
   Autocomplete,
   Box,
-  Button,
   Chip,
-  Container,
   Stack,
   TextField,
   Typography,
@@ -69,7 +67,11 @@ const StudyPage = () => {
   };
 
   const handleGoBack = () => {
-    navigate(-1); // 回到上一頁
+    navigate(-1);
+  };
+
+  const handleCancel = () => {
+    navigate('/');
   };
 
   useEffect(() => {
@@ -82,47 +84,12 @@ const StudyPage = () => {
   }, []);
 
   return (
-    <Container maxWidth="xl">
-      {/* 頁面標題區域 - 簡潔的導航與標題 */}
-      <Box sx={{ mt: 3, mb: 4 }}>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Button
-            onClick={handleGoBack}
-            startIcon={<ArrowBack />}
-            variant="text"
-            sx={{
-              color: 'text.secondary',
-              fontSize: '0.875rem',
-              fontWeight: 500,
-              textTransform: 'none',
-              minWidth: 'auto',
-              '&:hover': {
-                backgroundColor: 'action.hover',
-                color: 'primary.main',
-              },
-            }}
-          >
-            返回
-          </Button>
-
-          <Typography
-            variant="h5"
-            component="h1"
-            sx={{
-              fontWeight: 600,
-              color: 'text.primary',
-              flex: 1,
-              textAlign: 'center',
-            }}
-          >
-            單字學習
-          </Typography>
-
-          {/* 右側保持空白以平衡視覺 */}
-          <Box sx={{ width: 64 }} />
-        </Stack>
-      </Box>
-
+    <PageLayout
+      title="單字學習"
+      onGoBack={handleGoBack}
+      onCancel={handleCancel}
+      maxWidth="xl"
+    >
       {/* 過濾器區域 */}
       <Box sx={{ mb: 4 }}>
         <Stack
@@ -263,7 +230,7 @@ const StudyPage = () => {
           );
         })}
       </Grid>
-    </Container>
+    </PageLayout>
   );
 };
 
