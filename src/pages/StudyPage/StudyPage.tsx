@@ -3,13 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 import PageLayout from '@/components/shared/PageLayout/PageLayout';
 import type { VocabularyState } from '@/types/index';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import SchoolIcon from '@mui/icons-material/School';
 import {
   Autocomplete,
   Box,
+  Card,
+  CardContent,
   Chip,
+  Container,
+  Divider,
+  Fade,
+  Paper,
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { Grid } from '@mui/material';
 
@@ -18,6 +27,7 @@ import VocabularyCard from './components/VocabularyCard';
 
 const StudyPage = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>([]);
   const [colors, setColors] = useState<string[]>([]);
 
@@ -74,13 +84,22 @@ const StudyPage = () => {
     navigate('/');
   };
 
+  // 計算統計數據
+  const statisticsData = useMemo(() => {
+    const total = allVocabulary.length;
+    const filtered = filterVocabulary.length;
+    const statistics = colorOptions.map((option) => ({
+      ...option,
+      count: allVocabulary.filter((v) => v.familiar === option.value).length,
+    }));
+    return { total, filtered, statistics };
+  }, [allVocabulary, filterVocabulary, colorOptions]);
+
   useEffect(() => {
     const vocabulary: VocabularyState[] = JSON.parse(
       localStorage.getItem('vocabulary') || '[]',
     );
     setAllVocabulary(vocabulary);
-
-    console.log(vocabulary);
   }, []);
 
   return (
@@ -90,146 +109,263 @@ const StudyPage = () => {
       onCancel={handleCancel}
       maxWidth="xl"
     >
-      {/* 過濾器區域 */}
-      <Box sx={{ mb: 4 }}>
-        <Stack
-          direction="row"
-          spacing={2}
-          justifyContent="center"
-          alignItems="flex-end"
-        >
-          <Autocomplete
-            multiple
-            options={colorOptions}
-            value={colorOptions.filter((option) =>
-              colors.includes(option.value),
-            )}
-            onChange={handleAutocompleteChange}
-            getOptionLabel={(option) => option.label}
-            noOptionsText="沒有匹配的選項"
-            renderOption={(props, option) => (
-              <Box component="li" {...props}>
-                <Box
-                  sx={{
-                    width: 16,
-                    height: 16,
-                    borderRadius: '50%',
-                    backgroundColor: option.color,
-                    mr: 1,
-                  }}
-                />
-                {option.label}
-              </Box>
-            )}
-            renderValue={(value, getItemProps) =>
-              value.map((option, index) => (
-                <Chip
-                  {...getItemProps({ index })}
-                  key={option.value}
-                  label={option.label}
-                  size="small"
-                  sx={{
-                    backgroundColor: option.color + '20',
-                    '& .MuiChip-deleteIcon': {
-                      color: option.color,
-                    },
-                  }}
-                />
-              ))
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="過濾熟悉度顏色"
-                placeholder={
-                  colors.length === 0 ? '顯示全部單字' : '選擇更多顏色'
-                }
-                variant="outlined"
-              />
-            )}
+      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
+        {/* 頂部統計卡片 */}
+        <Fade in timeout={600}>
+          <Paper
+            elevation={0}
             sx={{
-              width: { xs: '100%', sm: 400 },
-              maxWidth: 400,
-            }}
-          />
-        </Stack>
-      </Box>
-
-      {/* 結果統計區域 - 放在過濾器和內容之間 */}
-      <Box sx={{ mb: 3 }}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{
-            px: 1,
-            py: 2,
-            backgroundColor: 'grey.50',
-            borderRadius: 1,
-            border: '1px solid',
-            borderColor: 'grey.200',
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{
-              color: 'text.primary',
-              fontWeight: 500,
+              mb: 4,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}15 0%, ${theme.palette.secondary.main}15 100%)`,
+              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 3,
+              overflow: 'hidden',
             }}
           >
-            學習結果
-          </Typography>
+            <CardContent sx={{ py: 3 }}>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={3}
+                alignItems={{ xs: 'flex-start', sm: 'center' }}
+                justifyContent="space-between"
+              >
+                <Box>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    sx={{ mb: 1 }}
+                  >
+                    <SchoolIcon color="primary" fontSize="small" />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        color: 'text.primary',
+                      }}
+                    >
+                      學習進度總覽
+                    </Typography>
+                  </Stack>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: 700,
+                      color: 'primary.main',
+                      mb: 0.5,
+                    }}
+                  >
+                    {statisticsData.filtered}
+                    <Typography
+                      component="span"
+                      variant="body1"
+                      sx={{
+                        ml: 1,
+                        color: 'text.secondary',
+                        fontWeight: 400,
+                      }}
+                    >
+                      / {statisticsData.total} 個單字
+                    </Typography>
+                  </Typography>
+                  {colors.length > 0 && (
+                    <Chip
+                      label="已套用篩選"
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      sx={{ mt: 1 }}
+                    />
+                  )}
+                </Box>
 
-          <Typography
-            variant="body1"
+                {/* 熟悉度統計 */}
+                <Box>
+                  <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+                    {statisticsData.statistics.map((stat) => (
+                      <Box key={stat.value} sx={{ textAlign: 'center' }}>
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            backgroundColor: stat.color,
+                            mx: 'auto',
+                            mb: 0.5,
+                          }}
+                        />
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: 'block',
+                            fontWeight: 600,
+                            color: 'text.primary',
+                          }}
+                        >
+                          {stat.count}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Stack>
+                </Box>
+              </Stack>
+            </CardContent>
+          </Paper>
+        </Fade>
+
+        {/* 過濾器區域 */}
+        <Fade in timeout={800}>
+          <Card
+            elevation={0}
             sx={{
-              color: 'primary.main',
-              fontWeight: 600,
-              fontSize: '1.1rem',
+              mb: 4,
+              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 2,
             }}
           >
-            共 {filterVocabulary.length} 個單字
-            {colors.length > 0 && (
-              <Typography
-                component="span"
-                variant="body2"
+            <CardContent sx={{ py: 3 }}>
+              <Stack spacing={2}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <FilterListIcon color="action" fontSize="small" />
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      fontWeight: 600,
+                      color: 'text.primary',
+                    }}
+                  >
+                    篩選條件
+                  </Typography>
+                </Stack>
+
+                <Autocomplete
+                  multiple
+                  options={colorOptions}
+                  value={colorOptions.filter((option) =>
+                    colors.includes(option.value),
+                  )}
+                  onChange={handleAutocompleteChange}
+                  getOptionLabel={(option) => option.label}
+                  noOptionsText="沒有匹配的選項"
+                  renderOption={(props, option) => (
+                    <Box component="li" {...props}>
+                      <Box
+                        sx={{
+                          width: 16,
+                          height: 16,
+                          borderRadius: '50%',
+                          backgroundColor: option.color,
+                          mr: 1.5,
+                          border: '1px solid',
+                          borderColor: 'grey.300',
+                        }}
+                      />
+                      <Typography variant="body2">{option.label}</Typography>
+                    </Box>
+                  )}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip
+                        {...getTagProps({ index })}
+                        key={option.value}
+                        label={option.label}
+                        size="small"
+                        sx={{
+                          backgroundColor: `${option.color}20`,
+                          color: option.color,
+                          fontWeight: 500,
+                          '& .MuiChip-deleteIcon': {
+                            color: option.color,
+                            '&:hover': {
+                              color: theme.palette.text.primary,
+                            },
+                          },
+                        }}
+                      />
+                    ))
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="選擇熟悉度篩選"
+                      placeholder={
+                        colors.length === 0 ? '顯示全部單字' : '選擇更多顏色'
+                      }
+                      variant="outlined"
+                      size="medium"
+                    />
+                  )}
+                  sx={{
+                    width: '100%',
+                    maxWidth: 500,
+                  }}
+                />
+              </Stack>
+            </CardContent>
+          </Card>
+        </Fade>
+
+        {/* 單字卡片網格 */}
+        <Box>
+          {filterVocabulary.length === 0 ? (
+            <Fade in timeout={1000}>
+              <Paper
                 sx={{
-                  color: 'text.secondary',
-                  ml: 1,
-                  fontSize: '0.875rem',
+                  py: 8,
+                  textAlign: 'center',
+                  backgroundColor: 'grey.50',
+                  border: `1px dashed ${theme.palette.grey[300]}`,
+                  borderRadius: 2,
                 }}
               >
-                (已篩選)
-              </Typography>
-            )}
-          </Typography>
-        </Stack>
-      </Box>
-
-      {/* 單字卡片網格 */}
-      <Grid container spacing={3}>
-        {filterVocabulary.map((vocabularyInput) => {
-          return (
-            <Fragment key={vocabularyInput.id}>
-              <Grid size={{ xs: 12, md: 4, lg: 3 }}>
-                <VocabularyCard
-                  vocabularyInput={vocabularyInput}
-                  onConfirm={handlerDeleteDialogConfirm}
+                <SchoolIcon
+                  sx={{
+                    fontSize: 64,
+                    color: 'grey.400',
+                    mb: 2,
+                  }}
                 />
-                <GroupColorButton
-                  currentColor={vocabularyInput.familiar}
-                  onChangeColor={(color) =>
-                    handleChangeColor(
-                      vocabularyInput.id,
-                      color as 'red' | 'yellow' | 'green' | 'orange',
-                    )
-                  }
-                />
-              </Grid>
-            </Fragment>
-          );
-        })}
-      </Grid>
+                <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
+                  {colors.length > 0 ? '沒有符合條件的單字' : '還沒有任何單字'}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {colors.length > 0
+                    ? '試試調整篩選條件'
+                    : '開始新增您的第一個單字吧！'}
+                </Typography>
+              </Paper>
+            </Fade>
+          ) : (
+            <Grid container spacing={3}>
+              {filterVocabulary.map((vocabularyInput, index) => (
+                <Fragment key={vocabularyInput.id}>
+                  <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                    <Fade in timeout={1000 + index * 100}>
+                      <Box>
+                        <VocabularyCard
+                          vocabularyInput={vocabularyInput}
+                          onConfirm={handlerDeleteDialogConfirm}
+                        />
+                        <Box sx={{ mt: 2 }}>
+                          <GroupColorButton
+                            currentColor={vocabularyInput.familiar}
+                            onChangeColor={(color) =>
+                              handleChangeColor(
+                                vocabularyInput.id,
+                                color as 'red' | 'yellow' | 'green' | 'orange',
+                              )
+                            }
+                          />
+                        </Box>
+                      </Box>
+                    </Fade>
+                  </Grid>
+                </Fragment>
+              ))}
+            </Grid>
+          )}
+        </Box>
+      </Container>
     </PageLayout>
   );
 };
