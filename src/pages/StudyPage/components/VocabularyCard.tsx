@@ -96,7 +96,7 @@ const VocabularyCard: FC<VocabularyCardProps> = ({
         {/* 頂部顏色條 */}
         <Box
           sx={{
-            height: 4,
+            height: 32,
             background: `linear-gradient(90deg, ${cardColor} 0%, ${alpha(cardColor, 0.6)} 100%)`,
           }}
         />
@@ -112,8 +112,8 @@ const VocabularyCard: FC<VocabularyCardProps> = ({
             >
               <Box
                 sx={{
-                  width: 8,
-                  height: 8,
+                  width: 32,
+                  height: 32,
                   borderRadius: '50%',
                   backgroundColor: cardColor,
                   mt: 0.5,
@@ -263,13 +263,6 @@ const VocabularyCard: FC<VocabularyCardProps> = ({
           transformOrigin={{
             vertical: 'top',
             horizontal: 'right',
-          }}
-          PaperProps={{
-            sx: {
-              borderRadius: 2,
-              boxShadow: theme.shadows[8],
-              border: `1px solid ${theme.palette.divider}`,
-            },
           }}
         >
           <MenuItem onClick={handleEditPageOpen}>
