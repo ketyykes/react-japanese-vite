@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 # Material UI v7 元件開發標準
 
@@ -52,5 +52,4 @@ const Component: React.FC<ComponentProps> = ({ ...props }) => {
 
 ## 表單元件
 - 使用 `<TextField>`, `<Button>`, `<Select>` 等 MUI 元件
-- 配合 React Hook Form + Zod 進行表單驗證
 - 提供即時驗證回饋
