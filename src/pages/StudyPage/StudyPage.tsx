@@ -12,7 +12,6 @@ import {
   CardContent,
   Chip,
   Container,
-  Divider,
   Fade,
   Paper,
   Stack,
@@ -127,7 +126,7 @@ const StudyPage = () => {
                 direction={{ xs: 'column', sm: 'row' }}
                 spacing={3}
                 alignItems={{ xs: 'flex-start', sm: 'center' }}
-                justifyContent="space-between"
+                justifyContent="space-around"
               >
                 <Box>
                   <Stack
@@ -147,47 +146,56 @@ const StudyPage = () => {
                       學習進度總覽
                     </Typography>
                   </Stack>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontWeight: 700,
-                      color: 'primary.main',
-                      mb: 0.5,
-                    }}
-                  >
-                    {statisticsData.filtered}
+                  <Box sx={{ minHeight: 60 }}>
                     <Typography
-                      component="span"
-                      variant="body1"
+                      variant="h4"
                       sx={{
-                        ml: 1,
-                        color: 'text.secondary',
-                        fontWeight: 400,
+                        fontWeight: 700,
+                        color: 'primary.main',
+                        mb: 0.5,
+                        minWidth: 200,
+                        display: 'inline-block',
                       }}
                     >
-                      / {statisticsData.total} 個單字
+                      {statisticsData.filtered}
+                      <Typography
+                        component="span"
+                        variant="body1"
+                        sx={{
+                          ml: 1,
+                          color: 'text.secondary',
+                          fontWeight: 400,
+                        }}
+                      >
+                        / {statisticsData.total} 個單字
+                      </Typography>
                     </Typography>
-                  </Typography>
-                  {colors.length > 0 && (
-                    <Chip
-                      label="已套用篩選"
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      sx={{ mt: 1 }}
-                    />
-                  )}
+                    <Box sx={{ mt: 1, minHeight: 32 }}>
+                      {colors.length > 0 ? (
+                        <Chip
+                          label="已套用篩選"
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        />
+                      ) : (
+                        <Box sx={{ height: 32 }} />
+                      )}
+                    </Box>
+                  </Box>
                 </Box>
 
                 {/* 熟悉度統計 */}
-                <Box>
+                <Box
+                  sx={{ minHeight: 60, display: 'flex', alignItems: 'center' }}
+                >
                   <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
                     {statisticsData.statistics.map((stat) => (
                       <Box key={stat.value} sx={{ textAlign: 'center' }}>
                         <Box
                           sx={{
-                            width: 12,
-                            height: 12,
+                            width: 32,
+                            height: 32,
                             borderRadius: '50%',
                             backgroundColor: stat.color,
                             mx: 'auto',
@@ -195,11 +203,12 @@ const StudyPage = () => {
                           }}
                         />
                         <Typography
-                          variant="caption"
+                          variant="h5"
                           sx={{
                             display: 'block',
-                            fontWeight: 600,
+                            fontWeight: 700,
                             color: 'text.primary',
+                            fontSize: '0.9rem',
                           }}
                         >
                           {stat.count}
@@ -263,26 +272,59 @@ const StudyPage = () => {
                       <Typography variant="body2">{option.label}</Typography>
                     </Box>
                   )}
-                  renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <Chip
-                        {...getTagProps({ index })}
-                        key={option.value}
-                        label={option.label}
-                        size="small"
-                        sx={{
-                          backgroundColor: `${option.color}20`,
-                          color: option.color,
-                          fontWeight: 500,
-                          '& .MuiChip-deleteIcon': {
-                            color: option.color,
+                  renderValue={(value, getItemProps) =>
+                    value.map((option, index) => {
+                      const unifiedTextColor = '#374151'; // 統一使用優雅的深藍灰色
+
+                      return (
+                        <Chip
+                          {...getItemProps({ index })}
+                          key={option.value}
+                          label={
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1,
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: 16,
+                                  height: 16,
+                                  borderRadius: '50%',
+                                  backgroundColor: option.color,
+                                  flexShrink: 0,
+                                }}
+                              />
+                              {option.label}
+                            </Box>
+                          }
+                          size="small"
+                          variant="outlined"
+                          sx={{
+                            backgroundColor: 'transparent',
+                            color: unifiedTextColor,
+                            fontWeight: 600,
+                            borderRadius: 2,
+                            border: `2px solid ${option.color}`,
                             '&:hover': {
-                              color: theme.palette.text.primary,
+                              backgroundColor: `${option.color}08`,
+                              borderColor: option.color,
                             },
-                          },
-                        }}
-                      />
-                    ))
+                            '& .MuiChip-deleteIcon': {
+                              color: unifiedTextColor,
+                              opacity: 0.7,
+                              '&:hover': {
+                                opacity: 1,
+                                backgroundColor: `${unifiedTextColor}15`,
+                                borderRadius: '50%',
+                              },
+                            },
+                          }}
+                        />
+                      );
+                    })
                   }
                   renderInput={(params) => (
                     <TextField
@@ -297,7 +339,6 @@ const StudyPage = () => {
                   )}
                   sx={{
                     width: '100%',
-                    maxWidth: 500,
                   }}
                 />
               </Stack>
