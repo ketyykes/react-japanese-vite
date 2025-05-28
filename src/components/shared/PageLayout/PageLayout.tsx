@@ -15,7 +15,7 @@ type PageLayoutProps = {
   title: string;
   isLoading?: boolean;
   onGoBack: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
   children: ReactNode;
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 };
