@@ -1,29 +1,41 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import PageLayout from '@/components/shared/PageLayout/PageLayout';
 import VocabularyForm from '@/components/shared/VocabularyForm/VocabularyForm';
-import { initialState } from '@/components/shared/VocabularyForm/vocabularyInitialState';
-import vocabularyReducer from '@/components/shared/VocabularyForm/vocabularyReducer';
 import type { VocabularyState } from '@/types';
-import { ArrowBack } from '@mui/icons-material';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { CheckCircle, Save } from '@mui/icons-material';
+import {
+  Alert,
+  Box,
+  Button,
+  Fab,
+  Slide,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 
 import StoreDialog from './components/StoreDialog';
+import { useVocabularyForm } from './components/hooks';
 
 const NewPage = () => {
   const navigate = useNavigate();
+  const { vocabularyInput, dispatch, isFormValid, resetForm } =
+    useVocabularyForm();
+
   const [allVocabulary, setAllVocabulary] = useState<VocabularyState[]>(
     localStorage.getItem('vocabulary')
       ? JSON.parse(localStorage.getItem('vocabulary') as string)
       : [],
   );
-  const [vocabularyInput, DVocabularyInput] = useReducer(
-    vocabularyReducer,
-    initialState,
-  );
   const [open, setOpen] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  const handleCancel = () => {
     navigate(-1);
   };
 
@@ -35,26 +47,39 @@ const NewPage = () => {
         id: Date.now().toString(),
       },
     ]);
-    DVocabularyInput({
-      type: 'confirm',
-    });
+    resetForm();
     setOpen(false);
+    setShowSuccessAlert(true);
+
+    // 延遲返回，讓用戶看到成功提示
+    setTimeout(() => {
+      navigate(-1);
+    }, 1500);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setOpen(true);
+    if (isFormValid) {
+      setOpen(true);
+    }
+  };
+
+  const handleSave = () => {
+    if (isFormValid) {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleCancel = () => {
-    navigate(-1);
-  };
   const handleDialogCancel = () => {
     setOpen(false);
+  };
+
+  const handleCloseSuccessAlert = () => {
+    setShowSuccessAlert(false);
   };
 
   useEffect(() => {
@@ -62,57 +87,42 @@ const NewPage = () => {
   }, [allVocabulary]);
 
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ mt: 3, mb: 4 }}>
-        <Grid container alignItems="center">
-          <Grid size={4}>
-            <Button
-              onClick={handleGoBack}
-              startIcon={<ArrowBack />}
-              variant="text"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                  color: 'primary.main',
-                },
-              }}
-            >
-              返回
-            </Button>
-          </Grid>
-
-          <Grid size={4}>
-            <Typography
-              variant="h5"
-              component="h1"
-              sx={{
-                fontWeight: 600,
-                color: 'text.primary',
-                textAlign: 'center',
-              }}
-            >
-              新增單字
-            </Typography>
-          </Grid>
-
-          <Grid size={4}></Grid>
-        </Grid>
-      </Box>
-
-      {/* 表單內容 */}
-      <Box sx={{ maxWidth: 'md', mx: 'auto' }}>
+    <>
+      <PageLayout
+        title="新增單字"
+        onGoBack={handleGoBack}
+        onCancel={handleCancel}
+      >
         <form onSubmit={handleSubmit}>
+          {/* 表單說明 */}
+          <Box sx={{ mb: 3 }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{
+                textAlign: 'center',
+                fontSize: { xs: '0.9rem', sm: '1rem' },
+                lineHeight: 1.6,
+              }}
+            >
+              請填寫完整的單字資訊，標註 * 的欄位為必填項目
+            </Typography>
+          </Box>
+
+          {/* 表單內容 */}
           <VocabularyForm
             vocabularyData={vocabularyInput}
-            dispatch={DVocabularyInput}
+            dispatch={dispatch}
           />
 
+          {/* 桌面版按鈕區域 */}
           <Box
-            sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 4 }}
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              justifyContent: 'center',
+              gap: 2,
+              mt: 4,
+            }}
           >
             <Button
               variant="outlined"
@@ -121,7 +131,10 @@ const NewPage = () => {
               sx={{
                 px: 4,
                 py: 1.5,
-                fontSize: '1.1rem',
+                fontSize: '1rem',
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 500,
               }}
             >
               取消
@@ -130,18 +143,49 @@ const NewPage = () => {
               variant="contained"
               size="large"
               type="submit"
+              disabled={!isFormValid}
+              startIcon={<Save />}
               sx={{
                 px: 4,
                 py: 1.5,
-                fontSize: '1.1rem',
+                fontSize: '1rem',
+                borderRadius: 2,
+                textTransform: 'none',
+                fontWeight: 500,
+                boxShadow: 2,
+                '&:hover': {
+                  boxShadow: 4,
+                },
               }}
             >
-              儲存
+              儲存單字
             </Button>
           </Box>
         </form>
-      </Box>
+      </PageLayout>
 
+      {/* 手機版浮動儲存按鈕 */}
+      <Slide direction="up" in={true} mountOnEnter unmountOnExit>
+        <Fab
+          color="primary"
+          onClick={handleSave}
+          disabled={!isFormValid}
+          sx={{
+            display: { xs: 'flex', sm: 'none' },
+            position: 'fixed',
+            bottom: 24,
+            right: 24,
+            boxShadow: 3,
+            '&:hover': {
+              boxShadow: 6,
+            },
+          }}
+        >
+          <Save />
+        </Fab>
+      </Slide>
+
+      {/* 確認對話框 */}
       <StoreDialog
         vocabularyInput={vocabularyInput}
         open={open}
@@ -149,7 +193,28 @@ const NewPage = () => {
         onCancel={handleDialogCancel}
         onConfirm={handleDialogConfirm}
       />
-    </Container>
+
+      {/* 成功提示 */}
+      <Snackbar
+        open={showSuccessAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseSuccessAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseSuccessAlert}
+          severity="success"
+          variant="filled"
+          icon={<CheckCircle />}
+          sx={{
+            borderRadius: 2,
+            fontWeight: 500,
+          }}
+        >
+          單字已成功儲存！
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
