@@ -1,18 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import PageLayout from '@/components/shared/PageLayout/PageLayout';
 import RandomQuiz from '@/pages/QuizPage/components/RandomQuiz';
-import { ArrowBack } from '@mui/icons-material';
 import {
   Box,
-  Button,
-  Container,
   FormControl,
-  Grid,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Typography,
 } from '@mui/material';
 
 const Quiz = () => {
@@ -23,54 +19,21 @@ const Quiz = () => {
     navigate(-1);
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   const handleQuizTypeChange = (event: SelectChangeEvent) => {
     setQuizType(event.target.value as 'hiragana' | 'katakana');
   };
 
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ mt: 3, mb: 4 }}>
-        <Grid container alignItems="center">
-          <Grid size={4}>
-            <Button
-              onClick={handleGoBack}
-              startIcon={<ArrowBack />}
-              variant="text"
-              sx={{
-                color: 'text.secondary',
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                textTransform: 'none',
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                  color: 'primary.main',
-                },
-              }}
-            >
-              返回
-            </Button>
-          </Grid>
-
-          {/* 中間：標題 */}
-          <Grid size={4}>
-            <Typography
-              variant="h5"
-              component="h1"
-              sx={{
-                fontWeight: 600,
-                color: 'text.primary',
-                textAlign: 'center',
-              }}
-            >
-              隨機小測驗
-            </Typography>
-          </Grid>
-
-          {/* 右側：空白 */}
-          <Grid size={4}></Grid>
-        </Grid>
-      </Box>
-
+    <PageLayout
+      title="隨機小測驗"
+      onGoBack={handleGoBack}
+      onCancel={handleCancel}
+      maxWidth="xl"
+    >
       {/* 測驗類型選擇 */}
       <Box sx={{ mb: 6, display: 'flex', justifyContent: 'center' }}>
         <FormControl sx={{ minWidth: 300 }}>
@@ -93,7 +56,7 @@ const Quiz = () => {
       </Box>
 
       <RandomQuiz quizType={quizType} />
-    </Container>
+    </PageLayout>
   );
 };
 
