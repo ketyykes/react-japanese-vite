@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PageLayout from '@/components/shared/PageLayout/PageLayout';
@@ -19,7 +19,6 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { Grid } from '@mui/material';
 
 import GroupColorButton from './components/GroupColorButton';
 import VocabularyCard from './components/VocabularyCard';
@@ -377,33 +376,56 @@ const StudyPage = () => {
               </Paper>
             </Fade>
           ) : (
-            <Grid container spacing={3}>
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
+                  lg: 'repeat(4, 1fr)',
+                  xl: 'repeat(5, 1fr)',
+                },
+                gap: 3,
+                gridAutoRows: 'min-content',
+              }}
+            >
               {filterVocabulary.map((vocabularyInput, index) => (
-                <Fragment key={vocabularyInput.id}>
-                  <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                    <Fade in timeout={1000 + index * 100}>
-                      <Box>
-                        <VocabularyCard
-                          vocabularyInput={vocabularyInput}
-                          onConfirm={handlerDeleteDialogConfirm}
-                        />
-                        <Box sx={{ mt: 2 }}>
-                          <GroupColorButton
-                            currentColor={vocabularyInput.familiar}
-                            onChangeColor={(color) =>
-                              handleChangeColor(
-                                vocabularyInput.id,
-                                color as 'red' | 'yellow' | 'green' | 'orange',
-                              )
-                            }
-                          />
-                        </Box>
-                      </Box>
-                    </Fade>
-                  </Grid>
-                </Fragment>
+                <Fade key={vocabularyInput.id} in timeout={1000 + index * 100}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      height: '100%',
+                    }}
+                  >
+                    <Box sx={{ flex: 1 }}>
+                      <VocabularyCard
+                        vocabularyInput={vocabularyInput}
+                        onConfirm={handlerDeleteDialogConfirm}
+                      />
+                    </Box>
+                    <Box
+                      sx={{
+                        mt: 2,
+                        minHeight: 80, // 確保有足夠空間顯示按鈕
+                        width: '100%',
+                      }}
+                    >
+                      <GroupColorButton
+                        currentColor={vocabularyInput.familiar}
+                        onChangeColor={(color) =>
+                          handleChangeColor(
+                            vocabularyInput.id,
+                            color as 'red' | 'yellow' | 'green' | 'orange',
+                          )
+                        }
+                      />
+                    </Box>
+                  </Box>
+                </Fade>
               ))}
-            </Grid>
+            </Box>
           )}
         </Box>
       </Container>
