@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PageLayout from '@/components/shared/PageLayout/PageLayout';
 import RandomQuiz from '@/pages/QuizPage/components/RandomQuiz';
-import VocabularyQuiz from '@/pages/QuizPage/components/VocabularyQuiz';
+import VocabularyQuiz from '@/pages/QuizPage/components/VocabularyQuiz/VocabularyQuiz';
 import {
   Language as LanguageIcon,
   Quiz as QuizIcon,

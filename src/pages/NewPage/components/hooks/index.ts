@@ -1,0 +1,1 @@
+export { useVocabularyForm } from './useVocabularyForm';

@@ -1,0 +1,1 @@
+export { useEditVocabulary } from './useEditVocabulary';
