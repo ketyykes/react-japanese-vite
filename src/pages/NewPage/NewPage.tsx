@@ -2,18 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PageLayout from '@/components/shared/PageLayout/PageLayout';
+import SuccessAlert from '@/components/shared/SuccessAlert/SuccessAlert';
 import VocabularyForm from '@/components/shared/VocabularyForm/VocabularyForm';
 import type { VocabularyState } from '@/types';
-import { CheckCircle, Save } from '@mui/icons-material';
-import {
-  Alert,
-  Box,
-  Button,
-  Fab,
-  Slide,
-  Snackbar,
-  Typography,
-} from '@mui/material';
+import { Save } from '@mui/icons-material';
+import { Box, Button, Fab, Slide, Typography } from '@mui/material';
 
 import StoreDialog from './components/StoreDialog';
 import { useVocabularyForm } from './components/hooks';
@@ -195,25 +188,11 @@ const NewPage = () => {
       />
 
       {/* 成功提示 */}
-      <Snackbar
+      <SuccessAlert
         open={showSuccessAlert}
-        autoHideDuration={3000}
+        message="單字已成功儲存！"
         onClose={handleCloseSuccessAlert}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={handleCloseSuccessAlert}
-          severity="success"
-          variant="filled"
-          icon={<CheckCircle />}
-          sx={{
-            borderRadius: 2,
-            fontWeight: 500,
-          }}
-        >
-          單字已成功儲存！
-        </Alert>
-      </Snackbar>
+      />
     </>
   );
 };
