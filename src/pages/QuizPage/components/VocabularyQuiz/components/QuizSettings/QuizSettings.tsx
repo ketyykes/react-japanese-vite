@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import {
   Check as CheckIcon,
@@ -19,100 +19,34 @@ import {
   useTheme,
 } from '@mui/material';
 
+import { useQuizSettings } from './hooks';
+
 interface QuizSettingsProps {
   onStartQuiz: (questionCount: number) => void;
   availableQuestionCount: number;
 }
-
-const PRESET_COUNTS = [10, 20, 50] as const;
 
 const QuizSettings: FC<QuizSettingsProps> = ({
   onStartQuiz,
   availableQuestionCount,
 }) => {
   const theme = useTheme();
-  const [selectedOption, setSelectedOption] = useState<string>('10');
-  const [customCount, setCustomCount] = useState<string>('');
-  const [error, setError] = useState<string>('');
 
-  // 檢查是否有足夠的詞彙
-  const hasEnoughVocabulary = availableQuestionCount > 0;
-
-  useEffect(() => {
-    // 如果沒有足夠的詞彙，清除錯誤訊息
-    if (!hasEnoughVocabulary) {
-      setError('');
-    }
-  }, [hasEnoughVocabulary]);
-
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSelectedOption(value);
-    setError('');
-
-    // 如果選擇自定義，清空自定義輸入框
-    if (value !== 'custom') {
-      setCustomCount('');
-    }
-  };
-
-  const handleCustomCountChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = event.target.value;
-    setCustomCount(value);
-    setError('');
-  };
-
-  const handleStartQuiz = () => {
-    let questionCount: number;
-
-    if (selectedOption === 'custom') {
-      const customValue = parseInt(customCount, 10);
-
-      if (!customCount || isNaN(customValue) || customValue <= 0) {
-        setError('請輸入有效的題目數量');
-        return;
-      }
-
-      if (customValue > availableQuestionCount) {
-        setError(`最多只能設定 ${availableQuestionCount} 題`);
-        return;
-      }
-
-      questionCount = customValue;
-    } else {
-      questionCount = parseInt(selectedOption, 10);
-
-      if (questionCount > availableQuestionCount) {
-        setError(`詞彙數量不足，無法設定 ${questionCount} 題`);
-        return;
-      }
-    }
-
-    onStartQuiz(questionCount);
-  };
-
-  const isOptionDisabled = (count: number) => {
-    return !hasEnoughVocabulary || count > availableQuestionCount;
-  };
-
-  const isStartButtonDisabled = () => {
-    if (!hasEnoughVocabulary) return true;
-
-    if (selectedOption === 'custom') {
-      const customValue = parseInt(customCount, 10);
-      return (
-        !customCount ||
-        isNaN(customValue) ||
-        customValue <= 0 ||
-        customValue > availableQuestionCount
-      );
-    }
-
-    const presetValue = parseInt(selectedOption, 10);
-    return presetValue > availableQuestionCount;
-  };
+  const {
+    selectedOption,
+    customCount,
+    error,
+    hasEnoughVocabulary,
+    presetCounts,
+    setSelectedOption,
+    handleCustomCountChange,
+    handleStartQuiz,
+    isOptionDisabled,
+    isStartButtonDisabled,
+  } = useQuizSettings({
+    availableQuestionCount,
+    onStartQuiz,
+  });
 
   return (
     <Box
@@ -227,7 +161,7 @@ const QuizSettings: FC<QuizSettingsProps> = ({
                     mb: 2,
                   }}
                 >
-                  {PRESET_COUNTS.map((count) => (
+                  {presetCounts.map((count) => (
                     <Button
                       key={count}
                       variant={
@@ -237,8 +171,9 @@ const QuizSettings: FC<QuizSettingsProps> = ({
                       }
                       onClick={() => {
                         setSelectedOption(count.toString());
-                        setCustomCount('');
-                        setError('');
+                        handleCustomCountChange({
+                          target: { value: '' },
+                        } as React.ChangeEvent<HTMLInputElement>);
                       }}
                       disabled={isOptionDisabled(count)}
                       sx={{
@@ -286,7 +221,9 @@ const QuizSettings: FC<QuizSettingsProps> = ({
                   }
                   onClick={() => {
                     setSelectedOption('custom');
-                    setError('');
+                    handleCustomCountChange({
+                      target: { value: '' },
+                    } as React.ChangeEvent<HTMLInputElement>);
                   }}
                   sx={{
                     width: '100%',

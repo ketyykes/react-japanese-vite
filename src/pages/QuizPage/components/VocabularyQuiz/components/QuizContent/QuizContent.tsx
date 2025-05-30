@@ -15,7 +15,7 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { QuizScore } from './types';
+import { QuizScore } from '../../../../types';
 
 interface QuizContentProps {
   currentQuestion: VocabularyState;

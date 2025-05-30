@@ -25,6 +25,4 @@ export interface QuizState {
   isQuizCompleted: boolean;
 }
 
-export type QuizMode = 'chinese-to-kanji' | 'kanji-to-chinese';
-
 export type FamiliarityLevel = 'red' | 'orange' | 'yellow' | 'green';

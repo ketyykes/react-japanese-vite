@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { VocabularyState } from '@/types';
 
-import { shuffleVocabulary } from '../helpers';
+import { shuffleVocabulary } from '../components/VocabularyQuiz/helpers/quizUtils';
 
 interface UseVocabularyStorageReturn {
   vocabularyList: VocabularyState[];
@@ -29,7 +29,7 @@ export const useVocabularyStorage = (): UseVocabularyStorageReturn => {
 
           const shuffledList = shuffleVocabulary(vocabularyData);
 
-          // 如果有限制題目數量，則只取前N題
+          // 如果有限制題目數量，則只取前 N 題
           const finalList =
             questionLimit && questionLimit < shuffledList.length
               ? shuffledList.slice(0, questionLimit)

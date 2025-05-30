@@ -1,10 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 
-import NoVocabulary from './NoVocabulary';
-import QuizComplete from './QuizComplete';
-import QuizContent from './QuizContent';
-import QuizSettings from './QuizSettings';
-import { useQuizLogic, useVocabularyStorage } from './hooks';
+import { useQuizLogic, useVocabularyStorage } from '../../hooks';
+import {
+  NoVocabulary,
+  QuizComplete,
+  QuizContent,
+  QuizSettings,
+} from './components';
 
 /**
  * 主要的日語詞彙測驗元件

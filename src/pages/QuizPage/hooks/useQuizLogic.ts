@@ -2,7 +2,10 @@ import { useCallback, useState } from 'react';
 
 import { VocabularyState } from '@/types';
 
-import { createQuizResult, updateVocabularyFamiliarity } from '../helpers';
+import {
+  createQuizResult,
+  updateVocabularyFamiliarity,
+} from '../components/VocabularyQuiz/helpers/quizUtils';
 import { AnswerResults, QuizScore, QuizState } from '../types';
 
 interface UseQuizLogicProps {

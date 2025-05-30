@@ -1,11 +1,12 @@
 import { VocabularyState } from '@/types';
 
+import { FAMILIARITY_LEVELS, QUIZ_MODES } from '../../../constants';
 import {
   AnswerResults,
   FamiliarityLevel,
   QuizResult,
   QuizScore,
-} from '../types';
+} from '../../../types';
 
 /**
  * 隨機化詞彙列表順序
@@ -26,26 +27,26 @@ export const adjustFamiliarity = (
   if (isCorrect) {
     // 答對了，提升熟悉度
     switch (currentLevel) {
-      case 'red':
-        return 'orange';
-      case 'orange':
-        return 'yellow';
-      case 'yellow':
-        return 'green';
-      case 'green':
-        return 'green'; // 已經是最高級
+      case FAMILIARITY_LEVELS.RED:
+        return FAMILIARITY_LEVELS.ORANGE;
+      case FAMILIARITY_LEVELS.ORANGE:
+        return FAMILIARITY_LEVELS.YELLOW;
+      case FAMILIARITY_LEVELS.YELLOW:
+        return FAMILIARITY_LEVELS.GREEN;
+      case FAMILIARITY_LEVELS.GREEN:
+        return FAMILIARITY_LEVELS.GREEN; // 已經是最高級
     }
   } else {
     // 答錯了，降低熟悉度
     switch (currentLevel) {
-      case 'green':
-        return 'yellow';
-      case 'yellow':
-        return 'orange';
-      case 'orange':
-        return 'red';
-      case 'red':
-        return 'red'; // 已經是最低級
+      case FAMILIARITY_LEVELS.GREEN:
+        return FAMILIARITY_LEVELS.YELLOW;
+      case FAMILIARITY_LEVELS.YELLOW:
+        return FAMILIARITY_LEVELS.ORANGE;
+      case FAMILIARITY_LEVELS.ORANGE:
+        return FAMILIARITY_LEVELS.RED;
+      case FAMILIARITY_LEVELS.RED:
+        return FAMILIARITY_LEVELS.RED; // 已經是最低級
     }
   }
 };
@@ -72,7 +73,7 @@ export const updateVocabularyFamiliarity = (
 export const createQuizResult = (
   score: QuizScore,
   totalQuestions: number,
-  mode = 'chinese-to-kanji',
+  mode = QUIZ_MODES.CHINESE_TO_KANJI,
 ): QuizResult => {
   return {
     date: new Date().toISOString(),

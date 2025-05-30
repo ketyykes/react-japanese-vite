@@ -1,0 +1,1 @@
+export { useQuizSettings } from './useQuizSettings';

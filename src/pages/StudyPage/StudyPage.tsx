@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 import PageLayout from '@/components/shared/PageLayout/PageLayout';
-import { VocabularyState } from '@/types';
 import { Box, Container } from '@mui/material';
 
 import EmptyState from './components/EmptyState';

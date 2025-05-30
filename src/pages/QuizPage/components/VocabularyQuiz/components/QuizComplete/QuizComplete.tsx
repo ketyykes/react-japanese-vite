@@ -20,8 +20,8 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { calculatePercentage } from './helpers';
-import { QuizScore } from './types';
+import { QuizScore } from '../../../../types';
+import { calculatePercentage } from '../../helpers/quizUtils';
 
 interface QuizCompleteProps {
   score: QuizScore;
