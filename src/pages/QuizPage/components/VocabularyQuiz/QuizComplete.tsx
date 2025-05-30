@@ -6,6 +6,7 @@ import {
   Home as HomeIcon,
   TrendingUp as ProgressIcon,
   Refresh as RefreshIcon,
+  Settings as SettingsIcon,
   School as StudyIcon,
 } from '@mui/icons-material';
 import {
@@ -25,9 +26,14 @@ import { QuizScore } from './types';
 interface QuizCompleteProps {
   score: QuizScore;
   onRestart: () => void;
+  onBackToSettings?: () => void;
 }
 
-const QuizComplete: FC<QuizCompleteProps> = ({ score, onRestart }) => {
+const QuizComplete: FC<QuizCompleteProps> = ({
+  score,
+  onRestart,
+  onBackToSettings,
+}) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const percentage = calculatePercentage(score.correct, score.total);
@@ -83,13 +89,71 @@ const QuizComplete: FC<QuizCompleteProps> = ({ score, onRestart }) => {
               alignItems: 'center',
             }}
           >
-            {/* 主要導航按鈕 */}
+            {/* 重新測驗和設定按鈕 */}
             <Box
               sx={{
                 display: 'flex',
                 gap: 2,
-                flexWrap: 'wrap',
                 justifyContent: 'center',
+                flexWrap: 'wrap',
+                mb: 2,
+              }}
+            >
+              <Button
+                variant="outlined"
+                onClick={onRestart}
+                startIcon={<RefreshIcon />}
+                sx={{
+                  borderRadius: 2,
+                  px: 4,
+                  py: 1.5,
+                  minWidth: 140,
+                  fontWeight: 600,
+                  borderWidth: 2,
+                  '&:hover': {
+                    borderWidth: 2,
+                  },
+                }}
+              >
+                重新測驗
+              </Button>
+
+              {onBackToSettings && (
+                <Button
+                  variant="outlined"
+                  onClick={onBackToSettings}
+                  startIcon={<SettingsIcon />}
+                  sx={{
+                    borderRadius: 2,
+                    px: 4,
+                    py: 1.5,
+                    minWidth: 140,
+                    fontWeight: 600,
+                    borderWidth: 2,
+                    borderColor: theme.palette.secondary.main,
+                    color: theme.palette.secondary.main,
+                    '&:hover': {
+                      borderWidth: 2,
+                      borderColor: theme.palette.secondary.dark,
+                      backgroundColor: alpha(
+                        theme.palette.secondary.main,
+                        0.04,
+                      ),
+                    },
+                  }}
+                >
+                  重新設定
+                </Button>
+              )}
+            </Box>
+
+            {/* 導航按鈕 */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                justifyContent: 'center',
+                flexWrap: 'wrap',
               }}
             >
               <Button
@@ -123,26 +187,6 @@ const QuizComplete: FC<QuizCompleteProps> = ({ score, onRestart }) => {
                 回到首頁
               </Button>
             </Box>
-
-            {/* 重新測驗按鈕 */}
-            <Button
-              variant="outlined"
-              onClick={onRestart}
-              startIcon={<RefreshIcon />}
-              sx={{
-                borderRadius: 2,
-                px: 5,
-                py: 1.5,
-                minWidth: 160,
-                fontWeight: 600,
-                borderWidth: 2,
-                '&:hover': {
-                  borderWidth: 2,
-                },
-              }}
-            >
-              重新測驗
-            </Button>
           </Box>
         </CardContent>
       </Card>

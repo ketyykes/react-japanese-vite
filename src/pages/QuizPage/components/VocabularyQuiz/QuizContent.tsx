@@ -1,10 +1,7 @@
-import { FC } from 'react';
+import { FC, KeyboardEvent } from 'react';
 
 import { VocabularyState } from '@/types';
-import {
-  Cancel as CancelIcon,
-  CheckCircle as CheckIcon,
-} from '@mui/icons-material';
+import { Cancel as CancelIcon, Check as CheckIcon } from '@mui/icons-material';
 import {
   Alert,
   Box,
@@ -31,7 +28,7 @@ interface QuizContentProps {
   onAnswerChange: (answer: string) => void;
   onSubmitAnswer: () => void;
   onNextQuestion: () => void;
-  onKeyPress: (event: React.KeyboardEvent) => void;
+  onKeyPress: (event: KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const QuizContent: FC<QuizContentProps> = ({
@@ -58,7 +55,6 @@ const QuizContent: FC<QuizContentProps> = ({
           background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.05)} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`,
           border: `2px solid ${alpha(theme.palette.primary.main, 0.1)}`,
           borderRadius: 3,
-          transition: 'all 0.3s ease-in-out',
         }}
       >
         <CardContent sx={{ p: 4 }}>
@@ -71,46 +67,45 @@ const QuizContent: FC<QuizContentProps> = ({
               mb: 4,
             }}
           >
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
               題目 {currentQuestionIndex + 1} / {totalQuestions}
             </Typography>
             <Chip
-              label={`${score.correct} / ${score.total}`}
+              label={`${score.correct} / ${currentQuestionIndex + (isAnswered ? 1 : 0)}`}
               color="primary"
-              size="small"
               sx={{ fontWeight: 600 }}
             />
           </Box>
 
-          {/* 題目 */}
+          {/* 題目顯示 */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <Typography
+              variant="body1"
+              sx={{ mb: 2, color: theme.palette.text.secondary }}
+            >
               請輸入漢字
             </Typography>
             <Typography
-              variant="h3"
+              variant="h2"
               sx={{
-                fontWeight: 700,
+                fontWeight: 600,
                 color: theme.palette.primary.main,
                 mb: 2,
-                textShadow: `0 2px 4px ${alpha(theme.palette.primary.main, 0.2)}`,
+                fontSize: { xs: '3rem', sm: '4rem' },
+              }}
+            >
+              {currentQuestion.roma}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                fontStyle: 'italic',
+                color: theme.palette.text.secondary,
+                mb: 3,
               }}
             >
               {currentQuestion.chinese}
             </Typography>
-            {currentQuestion.roma && (
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{
-                  opacity: 0.7,
-                  fontStyle: 'italic',
-                  mb: 1,
-                }}
-              >
-                {currentQuestion.roma}
-              </Typography>
-            )}
           </Box>
 
           {/* 輸入框 */}

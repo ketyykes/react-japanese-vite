@@ -56,7 +56,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
                 fontWeight: 500,
               }}
             >
-              漢字 *
+              漢字 <span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField
               required
@@ -105,7 +105,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
                 fontWeight: 500,
               }}
             >
-              拼音 *
+              拼音 <span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField
               required
@@ -154,7 +154,7 @@ const VocabularyForm: FC<VocabularyFormProps> = ({
                 fontWeight: 500,
               }}
             >
-              中文 *
+              中文 <span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField
               required
