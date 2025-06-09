@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/ketyykes/react-japanese-vite",
+  "homepage": "https://ketyykes.github.io/react-japanese-vite/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
