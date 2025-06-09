@@ -8,6 +8,7 @@ import { filterVocabularyByColors } from '../utils';
 interface UseVocabularyFilterReturn {
   colors: string[];
   filteredVocabulary: VocabularyState[];
+
   handleAutocompleteChange: (_event: unknown, newValue: ColorOption[]) => void;
 }
 
