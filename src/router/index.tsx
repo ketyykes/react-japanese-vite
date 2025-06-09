@@ -7,31 +7,36 @@ import WordManagePage from '@/pages/NewPage/NewPage';
 import QuizPage from '@/pages/QuizPage/QuizPage';
 import StudyPage from '@/pages/StudyPage/StudyPage';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <HomePage />,
+    },
+    {
+      path: '/new',
+      element: <WordManagePage />,
+    },
+    {
+      path: '/quiz',
+      element: <QuizPage />,
+    },
+    {
+      path: '/study',
+      element: <StudyPage />,
+    },
+    {
+      path: '/edit/:id',
+      element: <EditPage />,
+    },
+    {
+      path: '/about',
+      element: <AboutPage />,
+    },
+  ],
   {
-    path: '/',
-    element: <HomePage />,
+    basename: '/react-japanese-vite',
   },
-  {
-    path: '/new',
-    element: <WordManagePage />,
-  },
-  {
-    path: '/quiz',
-    element: <QuizPage />,
-  },
-  {
-    path: '/study',
-    element: <StudyPage />,
-  },
-  {
-    path: '/edit/:id',
-    element: <EditPage />,
-  },
-  {
-    path: '/about',
-    element: <AboutPage />,
-  },
-]);
+);
 
 export default router;
