@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 日語學習應用功能指南
+
+## 核心資料結構
+主要的詞彙資料結構定義在 [src/types/index.ts](mdc:src/types/index.ts)：
+
+```typescript
+VocabularyState = {
+  chinese: string;      // 中文釋義
+  familiar: 'red' | 'yellow' | 'green' | 'orange'; // 熟悉程度
+  kanji: string;        // 日文漢字
+  roma: string;         // 羅馬字
+  notation: string;     // 備忘錄
+  id: string;          // 唯一識別碼
+}
+```
+
+## 熟悉程度色彩系統
+- 🔴 **red**: 不熟悉，需要重點學習
+- 🟡 **yellow**: 稍微熟悉，需要複習
+- 🟢 **green**: 熟悉，已掌握
+- 🟠 **orange**: 中等熟悉程度
+
+## 頁面功能
+- **HomePage**: 應用程式主頁，可能包含學習進度概覽
+- **StudyPage**: 學習模式，瀏覽和學習詞彙
+- **QuizPage**: 測驗模式，測試學習成果
+- **NewPage**: 新增詞彙功能
+- **EditPage**: 編輯現有詞彙
+
+## 開發注意事項
+1. **多語言字符處理**: 確保正確處理日文字符（漢字、平假名、片假名）
+2. **輸入法支援**: 考慮不同輸入法的相容性
+3. **字體顯示**: 確保日文字體正確顯示
+4. **學習進度追蹤**: 基於熟悉程度進行進度統計
+5. **資料持久化**: 需要考慮本地儲存或後端同步
+
+## 路由結構
+路由配置位於 [src/router/index.tsx](mdc:src/router/index.tsx)，使用 React Router Dom v7。
+

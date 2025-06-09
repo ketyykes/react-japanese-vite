@@ -1,0 +1,75 @@
+---
+description: |
+globs: ["*.tsx", "*.ts", "*.jsx", "*.js"]
+alwaysApply: true
+---
+
+# Clean Code Guidelines for React + MUI
+
+## 命名規則
+- 命名需具備語意，能明確描述用途與內容
+- 避免縮寫（除非是業界約定俗成，如 API、URL）
+- `handle` 開頭用於事件處理函式（如 `handleSubmit`）
+- `is`、`has`、`can` 開頭用於布林變數（如 `isLoading`、`hasError`）
+
+## 元件結構與檔案佈局
+- 每個元件聚焦「單一職責」
+- 使用分層命名與子元件封裝（如 `ProfileForm`、`ProfileFormField`）
+- 建議結構順序：
+  1. `import`
+  2. `type`/`interface`
+  3. `constant`
+  4. `hook`
+  5. `UI render`
+  6. `export`
+
+## 頁面模組化架構（Colocation）：
+
+
+```
+pages/
+├── PageName/
+│   ├── PageName.tsx
+│   ├── index.tsx
+│   ├── components/
+│   │   ├── ComponentX.tsx
+│   │   └── hooks/
+│   │       └── usePageLogic.ts
+│   ├── constants/
+│   │   └── data.ts
+│   └── styles.tsx
+│   ├── types/
+```
+
+## TypeScript 與型別
+- 使用嚴格的 TypeScript 設定（建議參考 `@tsconfig/strictest`）
+- 所有元件、hook 必須有明確的型別定義
+- 共用型別放在 `@/types/index.ts`
+- 優先使用 `interface`，僅在需聯合型別時使用 `type`
+- 組件命名：PascalCase（如 `UserCard`）
+- hook 命名：以 `use` 開頭的 camelCase（如 `useFetchData`）
+
+## 函式與邏輯撰寫
+- 每個函式只做一件事，長度不超過 30 行（含註解與空行）
+- 拆出邏輯重的部分為 helper 函式或 custom hook
+- 避免巢狀超過 3 層的判斷
+- 使用 `early return` 簡化流程
+- 事件函式請以 `handle` 開頭（如 `handleClick`）
+
+## UI 與 MUI 實踐
+- 優先使用 MUI v7 元件與 Theme System
+- 禁止使用 inline style，樣式變化統一透過 `sx` 
+- 響應式設計應使用 `theme.breakpoints`，避免寫死 `px`
+- 使用 `Typography` 統一文字樣式，避免直接用 `<p>`、`<h1>` 等原生元素
+
+## Import 與路徑別名
+- Import 順序：
+1. React、MUI 等核心庫
+2. 第三方套件（如 dayjs、lodash）
+3. `@/` 的內部模組
+4. 相對路徑模組（如 `./`、`../`）
+5. 型別引入放最後（`import type { MyType } from '@/types'`）
+
+## 常數與測試
+- 將 magic number 轉為具名常數（如 `const MAX_RETRY = 3`）
+- 與元件強耦合的常數放在 `/constants/`

@@ -1,0 +1,54 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 開發工作流程
+
+## 開發環境設置
+- **Node.js**: 20.9.0 (使用 Volta 管理)
+- **pnpm**: 8.15.1 (建議的套件管理器)
+- **開發伺服器**: Vite Dev Server (預設 port 5173)
+
+## 常用指令
+基於 [package.json](mdc:package.json) 中的 scripts：
+
+```bash
+# 開發模式
+pnpm dev
+
+# 建置專案
+pnpm build
+
+# 程式碼檢查
+pnpm lint
+
+# 預覽建置結果
+pnpm preview
+```
+
+## 程式碼品質工具
+- **ESLint**: 使用 [.eslintrc.cjs](mdc:.eslintrc.cjs) 配置
+  - 支援 TypeScript、React、JSX a11y
+  - 已配置 React 19 和最新 TypeScript 規則
+- **Prettier**: 使用 [.prettierrc](mdc:.prettierrc) 配置
+  - 包含 import 自動排序功能
+
+## Git 工作流程
+- 查看 [.gitignore](mdc:.gitignore) 了解忽略的檔案
+- 遵循常規的 Git Flow 或 GitHub Flow
+
+## Vite 特性
+根據 [vite.config.ts](mdc:vite.config.ts)：
+- HMR (Hot Module Replacement) 支援
+- 路徑別名: `@` → `./src`
+- 開發伺服器配置適合容器環境
+
+## 型別檢查
+- 建置前會執行 TypeScript 編譯檢查
+- 配置檔案: [tsconfig.json](mdc:tsconfig.json) 和 [tsconfig.node.json](mdc:tsconfig.node.json)
+
+## 部署注意事項
+- 專案建置到 `dist/` 目錄
+- 使用 Vite 的最佳化建置
+- 確保日文字體在生產環境正確載入

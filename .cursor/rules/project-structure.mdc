@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 專案結構指南
+
+這是一個基於 React + TypeScript + Vite 的日語學習應用程式。
+
+## 核心入口點
+- 主入口檔案: [main.tsx](mdc:src/main.tsx)
+- 應用程式根組件: [App.tsx](mdc:src/App.tsx)
+- HTML 模板: [index.html](mdc:index.html)
+
+## 專案配置
+- Vite 配置: [vite.config.ts](mdc:vite.config.ts) - 包含路徑別名 `@` 指向 `./src`
+- TypeScript 配置: [tsconfig.json](mdc:tsconfig.json)
+- ESLint 配置: [.eslintrc.cjs](mdc:.eslintrc.cjs)
+- Prettier 配置: [.prettierrc](mdc:.prettierrc)
+- 套件依賴: [package.json](mdc:package.json)
+
+## 源碼結構
+- **components/**: 可複用組件
+  - `shared/`: 共享組件
+- **pages/**: 頁面組件
+  - `HomePage/`: 首頁
+  - `StudyPage/`: 學習頁面
+  - `QuizPage/`: 測驗頁面
+  - `NewPage/`: 新增詞彙頁面
+  - `EditPage/`: 編輯詞彙頁面
+- **router/**: 路由配置 [index.tsx](mdc:src/router/index.tsx)
+- **types/**: TypeScript 型別定義 [index.ts](mdc:src/types/index.ts)
+- **assets/**: 靜態資源
+- **public/**: 公共靜態檔案
+
+## 主要技術棧
+- React 19.1.0 (最新版本)
+- TypeScript
+- Material-UI (MUI)
+- React Router Dom
+- Emotion (CSS-in-JS)
