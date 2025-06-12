@@ -33,9 +33,35 @@ alwaysApply: true
 - **assets/**: 靜態資源
 - **public/**: 公共靜態檔案
 
+## 頁面模組化架構（Colocation）
+
+每個頁面皆為一個獨立模組，其結構如下：
+
+```
+pages/
+├── PageName/
+│   ├── index.tsx                 # Router 用的 default export
+│   ├── PageName.tsx              # 主頁面元件（如邏輯複雜）
+│   ├── components/               # 該頁面專用的元件
+│   │   ├── ComponentX.tsx
+│   │   └── hooks/
+│   │       ├── usePageLogic.ts
+│   │       └── index.ts
+│   ├── constants/                # 該頁面專用常數與資料
+│   │   ├── index.ts
+│   │   └── data.ts
+│   ├── styles.tsx                # Emotion styled component（如有）
+│   └── types/                    # 該頁面專用的型別
+```
+
 ## 主要技術棧
 - React 19.1.0 (最新版本)
-- TypeScript
-- Material-UI (MUI)
+- TypeScript (嚴格模式)
+- Material-UI v7 (MUI)
 - React Router Dom
 - Emotion (CSS-in-JS)
+- Vite (建置工具)
+
+## 核心狀態管理
+- 專案的核心狀態是 `VocabularyState` 型別，定義在 [src/types/index.ts](mdc:src/types/index.ts)
+- 使用 React 19 的最新狀態管理特性
